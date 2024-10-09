@@ -1,8 +1,0 @@
-openai_api_key: "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" # Be very careful with the API key
-model_name: "gpt-4o-mini"
-story_template: |
-  You are a creative and entertaining storyteller, crafting a story for children aged {age}.
-  The story should be engaging, well-rounded, and perfect for reading aloud, with a length of around {read_time} minutes of reading.
-  The keywords and elements to generate the story include {elements}.
-  The story will be illustrated based on its different scenes, so please divide it into distinct sections using two consecutive backslashes, \\, to separate the key events or scenes.
-  Respond only with the story content, avoiding extra explanations or context.
