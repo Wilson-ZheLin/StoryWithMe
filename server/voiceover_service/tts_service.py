@@ -1,20 +1,10 @@
 import os
+import io
 from io import BytesIO
 from typing import IO
 
-from dotenv import load_dotenv
-from elevenlabs import VoiceSettings
-from elevenlabs.client import ElevenLabs
-
-# Load environment variables from .env file
-load_dotenv()
-
-ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-
-if not ELEVENLABS_API_KEY:
-    raise ValueError("ELEVENLABS_API_KEY environment variable not set")
-
-client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
+from api_config import client
+from elevenlabs import VoiceSettings, play, stream, save
 
 # Optional dependencies
 pydub_available = False
@@ -26,7 +16,9 @@ try:
 except ImportError:
     print("Optional dependency `pydub` is not available. `play_audio` will be disabled.")
 
-def text_to_speech_stream(text: str) -> IO[bytes]:
+
+# Raw method
+def text_to_speech_stream_raw(text: str) -> IO[bytes]:
     """
     Converts text to speech and returns the audio data as a byte stream.
     Args:
@@ -62,7 +54,8 @@ def text_to_speech_stream(text: str) -> IO[bytes]:
     audio_stream.seek(0)
     return audio_stream
 
-def play_audio(stream: BytesIO):
+# raw method
+def play_audio_raw(stream: BytesIO):
     """Plays audio from a given stream if pydub is available."""
     if not pydub_available:
         raise RuntimeError("The `play_audio` function is disabled because `pydub` is not installed.")
@@ -73,13 +66,26 @@ def play_audio(stream: BytesIO):
     # Play the audio
     play(audio_segment)
 
-def main():
+#raw method call
+def tts_raw():
+    
     """Main function to be executed when run as a standalone script."""
-    audio_stream = text_to_speech_stream("Hello, world! This is using the streaming API.")
+    audio_stream = text_to_speech_stream_raw("Hello, world! This is using the streaming API.")
     if pydub_available:
-        play_audio(audio_stream)
+        play_audio_raw(audio_stream)
     else:
         print("Audio playback is not available because `pydub` is not installed.")
+
+def text_to_speech_save():
+    audio = client.generate(
+    text="Hello! This is a test message.",
+    voice="Rachel",
+    model="eleven_multilingual_v2"
+    )
+    save(audio,"output.mp3")
+
+def main():
+    text_to_speech_save()
 
 if __name__ == "__main__":
     main()
