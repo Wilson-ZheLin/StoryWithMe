@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from llm_service.StoryGenerator import StoryGenerator
+from llm_service.StoryGeneratorViaPortKey import StoryGeneratorViaPortKey
 
 
 app = Flask(__name__)
@@ -18,8 +18,10 @@ def get_story():
     age = user_input["age"]
     read_time = user_input["readTime"]
     elements = user_input["elements"]
-    story_generator = StoryGenerator()
-    story = story_generator.generate_story(age, read_time, elements)
+    # story_generator = StoryGenerator()
+    # story = story_generator.generate_story(age, read_time, elements)
+    story_generator = StoryGeneratorViaPortKey()
+    story = ''.join(chunk for chunk in story_generator.generate(age, read_time, elements) if chunk is not None)
     return jsonify({'story': story})
 
 if __name__ == "__main__":
