@@ -4,7 +4,7 @@ from langchain.prompts import PromptTemplate
 from openai import OpenAI
 from portkey_ai import PORTKEY_GATEWAY_URL, createHeaders
 
-class StoryGeneratorViaPortKey:
+class LLMServiceViaPortKey:
 
     def __init__(self):
         config_path = os.path.join(os.path.dirname(__file__), 'config', 'config.yaml')
@@ -14,7 +14,7 @@ class StoryGeneratorViaPortKey:
         self.api_key = self.config["openai_api_key"]
         self.portkey_api_key = self.config["portkey_api_key"]
 
-    def generate(self, age: int, read_time: int, elements: list[str]):
+    def generate_story(self, age: int, read_time: int, elements: list[str]):
         client = OpenAI(
             api_key=self.api_key,
             base_url=PORTKEY_GATEWAY_URL,
@@ -33,8 +33,24 @@ class StoryGeneratorViaPortKey:
         for chunk in chat_complete:
             yield chunk.choices[0].delta.content
 
+    def interact(self, dialogue_history: list[dict], story: str):
+        client = OpenAI(
+            api_key=self.api_key,
+            base_url=PORTKEY_GATEWAY_URL,
+            default_headers=createHeaders(provider="openai", api_key=self.portkey_api_key)
+        )
+        prompt_system = PromptTemplate(input_variables=["story"], template=self.config["interaction_system"]).format(story=story)
+        chat_complete = client.chat.completions.create(
+            model=self.model_name,
+            messages=[{"role": "system", "content": prompt_system}]+dialogue_history,
+            stream=True
+        )
+        for chunk in chat_complete:
+            yield chunk.choices[0].delta.content
+
 if __name__ == '__main__':
-    story_generator = StoryGeneratorViaPortKey()
-    for content in story_generator.generate(age=5, read_time=1, elements=["sci-fi", "space", "time travel"]):
+    llm_content_processor = LLMServiceViaPortKey()
+    print("Test Generating Story: ")
+    for content in llm_content_processor.generate_story(age=5, read_time=1, elements=["sci-fi", "space", "time travel"]):
         if content is not None:
             print(content, end="", flush=True)

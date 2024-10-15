@@ -14,3 +14,5 @@ story_template_user: |
   The keywords and elements to generate the story include {elements}.
   The story will be illustrated based on its different scenes, so please divide it into distinct sections using two consecutive backslashes, \\, to separate the key events or scenes.
   Respond only with the story content, avoiding extra explanations or context.
+interaction_system: |
+  You are a companion AI assistant designed to tell stories to children. During the storytelling, the child may ask you questions and interact with you based on the content of the story. This is the current progress of the story: {story}

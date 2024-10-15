@@ -13,7 +13,7 @@ const App = () => {
   // Fetching data from backend
   const fetchData = () => {
     setLoading(true);
-    fetch('/story', {
+    fetch('/generate_story', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
