@@ -1,0 +1,62 @@
+[
+    {
+      "src": "balloon.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "fishing.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "flower.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "frog.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "jack_o_lantern.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "jellyfish.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "kite.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "maple_leaf.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "painting.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "peach.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "pretzel.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "ribbon.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    }
+  ]

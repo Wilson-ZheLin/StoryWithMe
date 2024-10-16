@@ -10,10 +10,6 @@ app = Flask(__name__)
 app.config['story_object'] = None 
 app.config['dialogue'] = Conversation()
 
-# def generate(age, read_time, elements):
-#     story = story_generator.generate_story(age, read_time, elements)
-#     return story
-
 @app.route("/")
 def index():
     return "<p>Hello, World!</p>"
@@ -24,16 +20,24 @@ def generate_story():
     age = user_input["age"]
     read_time = user_input["readTime"]
     elements = user_input["elements"]
-    # story_generator = StoryGenerator()
-    # story = story_generator.generate_story(age, read_time, elements)
     llm_content_processor = LLMServiceViaPortKey()
     story = ''.join(chunk for chunk in llm_content_processor.generate_story(age, read_time, elements) if chunk is not None)
     app.config['story_object'] = Story(story) # serve as a global variable
+
+    print(app.config['story_object'].content)
+    
     return jsonify({'story': story})
+
+@app.route("/get_story", methods=["GET"])
+def get_story():
+    _check_story_created()
+    return jsonify({'story': app.config['story_object'].content,
+                    'illustration_links': app.config['story_object'].illustration_links,
+                    'pages': app.config['story_object'].pages})
 
 @app.route("/interact", methods=["POST"])
 def interact_with_ai():
-    _check_story_created()
+    _check_story_created() # Ensure the story is created
     query = request.get_json()['query']
     app.config['dialogue'].add_message('user', query)
     llm_content_processor = LLMServiceViaPortKey()
