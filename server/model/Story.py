@@ -21,4 +21,4 @@ class Story:
     
     # For interaction with AI
     def get_current_progress_parts(self) -> str:
-        return '\n'.join(self.parts[:self.cursor + 1])
+        return ' '.join(self.parts[:self.cursor + 1])

@@ -37,7 +37,7 @@ def interact_with_ai():
     query = request.get_json()['query']
     app.config['dialogue'].add_message('user', query)
     llm_content_processor = LLMServiceViaPortKey()
-    story_of_current_progress = ' '.join(app.config['story_object'].parts[:app.config['story_object'].cursor+1])
+    story_of_current_progress = app.config['story_object'].get_current_progress_parts()
     response = ''.join(chunk for chunk in llm_content_processor.interact(app.config['dialogue'].get_conversation(), story_of_current_progress) if chunk is not None)
     app.config['dialogue'].add_message('assistant', response)
     return jsonify({'response': response})
