@@ -5,3 +5,10 @@ PyYAML==6.0.1
 requests==2.31.0
 tiktoken==0.7.0
 Flask>=3.0.3
+
+# Voiceover Requirements
+elevenlabs==1.9.0
+python-dotenv==1.0.1
+# Voiceover dev purposes
+pydub==0.25.1
+simpleaudio==1.0.4

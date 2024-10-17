@@ -163,3 +163,7 @@ cython_debug/
 
 *.DS_Store
 /server/static/*
+
+*.mp3
+*.m4a
+server/voiceover_service/sessions.json
