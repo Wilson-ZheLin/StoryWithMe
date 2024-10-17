@@ -6,6 +6,7 @@ from langchain.prompts import PromptTemplate
 from langchain.schema import HumanMessage
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
+# Deprecated
 class StoryGenerator:
 
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s  %(message)s')

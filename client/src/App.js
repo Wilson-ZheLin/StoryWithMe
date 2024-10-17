@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 const App = () => {
 
   const [data, setData] = useState({})
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const [age, setAge] = useState(0);
@@ -13,7 +13,7 @@ const App = () => {
   // Fetching data from backend
   const fetchData = () => {
     setLoading(true);
-    fetch('/story', {
+    fetch('/generate_story', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
