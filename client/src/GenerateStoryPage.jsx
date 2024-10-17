@@ -1,7 +1,8 @@
 import React, { useState, useEffect }  from 'react'
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext, useNavigate } from 'react-router-dom'
 
 const GenerateStoryPage = () => {
+  const navigate = useNavigate(); 
 
   const {name, age, readTime, hobbies, elements, mood} = useOutletContext()
 
@@ -43,8 +44,9 @@ const GenerateStoryPage = () => {
           {loading && <span className="loading loading-dots loading-sm"></span>}
           {error && <p>{error}</p>}
           {data && (
-          <div className="max-w-7xl">
+          <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
               <p>{data.story}</p>
+              <button className='btn btn-primary' onClick={()=>navigate('/story/1')}>All set, let's go!</button>
           </div>
           )}
     </div>

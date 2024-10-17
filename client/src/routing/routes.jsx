@@ -6,7 +6,7 @@ import WelcomePage from '../WelcomePage';
 import MoodCheckPage from '../MoodCheckPage';
 import SelectElementsPage from '../SelectElementsPage';
 import GenerateStoryPage from '../GenerateStoryPage';
-import StoryPage from '../StoryPage';
+import StoryDetailPage from '../StoryDetailPage';
 import StoryGalleryPage from '../StoryGalleryPage';
 
 export const router = createBrowserRouter([
@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
             {path: 'mood_check', element: <MoodCheckPage />},
             {path: 'element_select', element: <SelectElementsPage />},
             {path: 'story', element: <GenerateStoryPage />},
-            {path: 'story/:pageId', element: <StoryPage />},
+            {path: 'story/:pageId', element: <StoryDetailPage />},
             {path: 'story_gallery', element: <StoryGalleryPage />},
         ]
     }
