@@ -43,3 +43,5 @@ npm start
 **Frontend:** React, JavaScript, DaisyUI, TailwindCSS
 
 **API:** OpenAI
+
+**Others:** OpenMoji
