@@ -2,9 +2,13 @@ import os
 import io
 from io import BytesIO
 from typing import IO
+import typing,json
 
 from api_config import client
 from elevenlabs import VoiceSettings, play, stream, save
+from elevenlabs.types.voice import Voice
+
+SESSION_FILE = os.path.join("server", "voiceover_service","sessions.json")
 
 # Optional dependencies
 pydub_available = False
@@ -76,16 +80,103 @@ def tts_raw():
     else:
         print("Audio playback is not available because `pydub` is not installed.")
 
-def text_to_speech_save():
-    audio = client.generate(
-    text="Hello! This is a test message.",
-    voice="Rachel",
-    model="eleven_multilingual_v2"
-    )
-    save(audio,"output.mp3")
+
+def load_session_data() -> dict:
+    """Loads the session metadata from the JSON file."""
+    if not os.path.exists(SESSION_FILE):
+        # If the file doesn't exist, return an empty dictionary
+        return {}
+
+    try:
+        with open(SESSION_FILE, 'r') as file:
+            return json.load(file)
+    except json.JSONDecodeError:
+        # If the file is empty or has invalid JSON, return an empty dictionary
+        print(f"Warning: {SESSION_FILE} contains invalid JSON. Resetting session data.")
+        return {}
+
+def save_session_data(session_data: dict):
+    """Saves the session metadata to the JSON file."""
+    with open(SESSION_FILE, 'w') as file:
+        json.dump(session_data, file, indent=4)
+
+def get_next_session_id(session_data: dict) -> str:
+    """Determines the next session ID based on the metadata file."""
+    if not session_data:
+        return 'session_001'
+    
+    last_session_id = max(session_data.keys())
+    last_session_number = int(last_session_id.split('_')[-1])
+    next_session_number = last_session_number + 1
+    return f'session_{next_session_number:03d}'
+
+def text_to_speech_save(
+    session_texts: list[str] = ["Hello! This is a test message."],
+    voice: typing.Union[str, Voice] = "Rachel",
+    model: str = "eleven_multilingual_v2",
+    output_dir: str = os.path.join("server", "voiceover_service", "voice_output")
+) -> list[str]:
+    """
+    Converts a list of texts to speech and saves the audio files in an auto-incremented session-specific folder.
+    Tracks the sessions using a JSON metadata file.
+    
+    Args:
+        session_texts (list[str]): The list of text contents to be converted into speech.
+        voice (Union[str, Voice]): The voice ID or Voice object to be used for the conversion.
+        model (str): The model ID to be used for the conversion.
+        output_dir (str): The base directory where session folders will be created.
+        
+    Returns:
+        list[str]: A list of relative file paths to the saved audio files for the current session.
+    """
+    # Load session metadata
+    session_data = load_session_data()
+
+    # Determine the next session ID
+    session_id = get_next_session_id(session_data)
+    
+    # Create the session directory
+    session_dir = os.path.join(output_dir, session_id)
+    if not os.path.exists(session_dir):
+        os.makedirs(session_dir)
+
+    # Handle if the voice is passed as a Voice object or string
+    voice_id = voice.voice_id if isinstance(voice, Voice) else voice
+
+    # Generate and save audio files, and track paths for this session
+    audio_paths = []
+    for i, text in enumerate(session_texts):
+        # Generate speech using the provided voice and model
+        audio = client.generate(
+            text=text,
+            voice=voice_id,
+            model=model
+        )
+        # Save the audio file
+        output_file = os.path.join(session_dir, f"audio_{i}.mp3")
+        save(audio, output_file)
+        # Append the relative path (relative to the output_dir)
+        relative_path = os.path.relpath(output_file, output_dir)
+        audio_paths.append(relative_path)
+    
+    # Update session metadata
+    session_data[session_id] = {
+        'session_texts': session_texts,
+        'audio_paths': audio_paths,
+        'voice': voice_id,
+        'model': model
+    }
+    
+    # Save the updated session metadata
+    save_session_data(session_data)
+
+    return audio_paths
 
 def main():
-    text_to_speech_save()
+    from voice_cloning_service import clone_voice
+    # my_voice = clone_voice("Eric-1", "A cloned voice", ["audio_sample.m4a"])
+    audio_path = text_to_speech_save(session_texts=["Have a good day", "This is a test message"], voice="Eric-1")
+    print(audio_path)
 
 if __name__ == "__main__":
     main()
