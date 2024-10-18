@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Store as global variables
 app.config['story_object'] = None 
-app.config['dialogue'] = Conversation()
+app.config['dialogue'] = None
 
 @app.route("/")
 def index():
@@ -38,6 +38,8 @@ def get_story():
 @app.route("/interact", methods=["POST"])
 def interact_with_ai():
     _check_story_created() # Ensure the story is created
+    if app.config['dialogue'] is None:
+        app.config['dialogue'] = Conversation(app.config['story_object'].uuid)
     query = request.get_json()['query']
     app.config['dialogue'].add_message('user', query)
     llm_content_processor = LLMServiceViaPortKey()
