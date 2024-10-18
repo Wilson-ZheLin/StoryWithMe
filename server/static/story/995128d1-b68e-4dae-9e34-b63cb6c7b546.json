@@ -1,0 +1,28 @@
+{
+    "uuid": "995128d1-b68e-4dae-9e34-b63cb6c7b546",
+    "content": "Story Part 0 \\ Part 1 \\ Part 2 \\ Part 3 \\ Part 4",
+    "parts": [
+        "Story Part 0",
+        "Part 1",
+        "Part 2",
+        "Part 3",
+        "Part 4"
+    ],
+    "illustration_links": {
+        "0": "",
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": ""
+    },
+    "voice_links": {
+        "0": "",
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": ""
+    },
+    "pages": 5,
+    "cursor": -1,
+    "title": "This is a Title"
+}

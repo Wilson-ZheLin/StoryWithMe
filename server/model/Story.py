@@ -8,9 +8,9 @@ class Story:
         self.uuid = str(uuid.uuid4())
         self.content = content
         self.parts = [part.strip() for part in self.content.split("\\") if part.strip()]
-        self.illustration_links = []
-        self.voice_links = []
         self.pages = len(self.parts)
+        self.illustration_links = {i: "" for i in range(self.pages)}
+        self.voice_links = {i: "" for i in range(self.pages)}
         self.cursor = -1
         self.title = ""
     
@@ -37,9 +37,11 @@ class Story:
     def recreate_story(self, new_story_content: str):
         self.parts = self.parts[:self.cursor + 1] + [part.strip() for part in new_story_content.split("\\") if part.strip()]
         self.content = '\n \\ \n'.join(self.parts)
-        self.illustration_links = self.illustration_links[:self.cursor + 1]
-        self.voice_links = self.voice_links[:self.cursor + 1]
         self.pages = len(self.parts)
+        for i in range(self.cursor + 1, self.pages):
+            self.illustration_links[i] = ""
+            self.voice_links[i] = ""
+        self.save_as_json()
 
     def to_dict(self):
         return {
@@ -61,3 +63,8 @@ class Story:
         path = os.path.join(story_dir, f"{self.uuid}.json")
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(self.to_dict(), f, ensure_ascii=False, indent=4)
+
+if __name__ == "__main__":
+    story = Story("Story Part 0 \\ Part 1 \\ Part 2 \\ Part 3 \\ Part 4")
+    story.title = "This is a Title"
+    story.save_as_json()
