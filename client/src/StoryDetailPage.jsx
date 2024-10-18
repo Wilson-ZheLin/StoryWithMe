@@ -7,42 +7,53 @@ const StoryDetailPage = () => {
   const { pageId } = useParams();
   const navigate = useNavigate(); 
 
-  const [currentPage, setCurrentPage] = useState('');
+  const [story, setStory] = useState('');
+  const [currentPage, setCurrentPage] = useState(parseInt(pageId, 10));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const getStoryCurrentPage = () => {    
+  const getStory = () => {    
     setLoading(true);
-    fetch('/next_page', {
+    fetch('/get_story', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       },
     }).then(res => res.json())
-    .then(currentPage => {
-      setCurrentPage(currentPage);
-      console.log(currentPage);
+    .then(story => {
+      setStory(story);
+      console.log(story);
       setLoading(false);
     })
     .catch(error=>{
       console.log(error);
-      setError('Error fetching current page');
+      setError('Error fetching story json');
       setLoading(false);
     })
   }
 
   useEffect(() => {
-    getStoryCurrentPage();
-  }, [])
+    getStory();
+  }, [currentPage])
 
   const handleNextPage = () => {
-    const nextPageId = parseInt(pageId, 10) + 1;
-    navigate(`/story/${nextPageId}`);
+    const nextPageId = currentPage + 1;;
+    if (nextPageId > story.pages) {
+      navigate('/story_gallery');
+    } else {
+      setCurrentPage(nextPageId);
+      navigate(`/story/${nextPageId}`);
+    }
   };
 
   const handlePreviousPage = () => {
-    const previousPageId = parseInt(pageId, 10) - 1;
-    navigate(`/story/${previousPageId}`);
+    const prevPageId = currentPage - 1
+    if (prevPageId < 1) {
+      return;
+    } else {
+      setCurrentPage(prevPageId);
+      navigate(`/story/${prevPageId}`);
+    }
   };
 
 
@@ -58,22 +69,32 @@ const StoryDetailPage = () => {
           <li data-content="" className="step"></li>
           <li data-content="★" className="step"></li>
           <li data-content="" className="step"></li>
-          <li data-content="" className="step"></li>
+          <li data-content=""className="step"></li>
           <li data-content="●" className="step"></li>
         </ul>
 
-        <h1 className='text-2xl font-bold text-center'>Story Title</h1>
+        <h1 className='text-2xl font-bold text-center'>{story.title}</h1>
         <div className="flex items-center justify-center gap-8">
-          <img src="/left.png" className='w-20 hover:bg-base-200 cursor-pointer' onClick={handlePreviousPage}></img>
+          <button disabled={currentPage === 1} onClick={handlePreviousPage}>
+            <img 
+              src="/left.png" 
+              className={`w-20  ${currentPage === 1 ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer hover:bg-base-200'}`} 
+              alt="previous page"></img>
+          </button>
           <img src="https://placehold.co/1000x500"></img>
-          <img src="/next.png" className='w-20 hover:bg-base-200 cursor-pointer' onClick={handleNextPage}></img>
+          <button onClick={handleNextPage}>
+            <img 
+              src="/next.png" 
+              className='w-20 hover:bg-base-200 cursor-pointer' 
+              alt="next page"></img>
+          </button>
         </div>
         <div>
           {loading && <span className="loading loading-dots loading-sm"></span>}
           {error && <p>{error}</p>}
-          {currentPage && (
+          {story && (
           <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
-              <p>{currentPage.story}</p>
+              <p>{story.parts[currentPage - 1]}</p>
           </div>
         )}
         </div>
