@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
 
 const MoodCheckPage = () => {
 
   const navigate = useNavigate();
-
   const { mood, setMood } = useOutletContext();
+  const [selectedMood, setSelectedMood] = useState(null);
+
   const handleMood = (event) => {
     setMood(event.target.alt);
+    setSelectedMood(event.target.alt);
   };
 
   const handleClick = () => {
@@ -25,25 +27,25 @@ const MoodCheckPage = () => {
         <img
           src="/emoji_face_angry.png"
           alt="angry"
-          className="w-36 hover:bg-base-200 cursor-pointer"
+          className={`w-36 cursor-pointer hover:bg-base-200 ${selectedMood === 'angry' ? 'bg-base-200' : ''}`}
           onClick={handleMood}
         />
         <img
           src="/emoji_face_happy.png"
           alt="happy"
-          className="w-36 hover:bg-base-200 cursor-pointer"
+          className={`w-36 cursor-pointer hover:bg-base-200 ${selectedMood === 'happy' ? 'bg-base-200' : ''}`}
           onClick={handleMood}
         />
         <img
           src="/emoji_face_savoring_food.png"
           alt="savoring food"
-          className="w-36 hover:bg-base-200 cursor-pointer"
+          className={`w-36 cursor-pointer hover:bg-base-200 ${selectedMood === 'savoring food' ? 'bg-base-200' : ''}`}
           onClick={handleMood}
         />
         <img
           src="/emoji_weary_face.png"
           alt="weary"
-          className="w-36 hover:bg-base-200 cursor-pointer"
+          className={`w-36 cursor-pointer hover:bg-base-200 ${selectedMood === 'weary' ? 'bg-base-200' : ''}`}
           onClick={handleMood}
         />
       </div>

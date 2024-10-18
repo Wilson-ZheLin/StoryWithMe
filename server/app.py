@@ -20,8 +20,10 @@ def generate_story():
     age = user_input["age"]
     read_time = user_input["readTime"]
     elements = user_input["elements"]
+    mood = user_input["mood"]
+    hobbies = user_input["hobbies"]
     llm_content_processor = LLMServiceViaPortKey()
-    story_content = ''.join(chunk for chunk in llm_content_processor.generate_story(age, read_time, elements) if chunk is not None)
+    story_content = ''.join(chunk for chunk in llm_content_processor.generate_story(age, read_time, elements, hobbies, mood) if chunk is not None)
     story_obj = Story(story_content)
     app.config['uuid'] = story_obj.uuid
     story_obj.title = llm_content_processor.get_story_title(story_content)
@@ -32,7 +34,7 @@ def generate_story():
 @app.route("/get_story", methods=["GET"])
 def get_story():
     _check_story_created()
-    return jsonify(_get_story_object())
+    return jsonify(_get_story_object()._to_dict())
 
 @app.route("/interact", methods=["POST"])
 def interact_with_ai():

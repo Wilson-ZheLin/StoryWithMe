@@ -18,7 +18,7 @@ const GenerateStoryPage = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ age, readTime, elements }) // TODO:add hobbies as a parameter, need to modify the prompt
+      body: JSON.stringify({ age, readTime, elements, mood, hobbies }) 
     })
       .then(res => res.json())
       .then(data => {

@@ -22,7 +22,7 @@ class StoryGenerator:
         llm = ChatOpenAI(model_name=self.model_name, openai_api_key=self.api_key, temperature=1.0, streaming=True, callbacks=[StreamingStdOutCallbackHandler()])
         template = self.config["story_template"]
         prompt_template = PromptTemplate(
-            input_variables=["age", "read_time", "elements"],
+            input_variables=["age", "read_time", "elements", "mood", "hobbies"],
             template=template
         )
         summary_prompt = prompt_template.format(age=age, read_time=read_time, elements=', '.join(elements))
