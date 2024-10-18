@@ -20,8 +20,10 @@ def generate_story():
     age = user_input["age"]
     read_time = user_input["readTime"]
     elements = user_input["elements"]
+    mood = user_input["mood"]
+    hobbies = user_input["hobbies"]
     llm_content_processor = LLMServiceViaPortKey()
-    story = ''.join(chunk for chunk in llm_content_processor.generate_story(age, read_time, elements) if chunk is not None)
+    story = ''.join(chunk for chunk in llm_content_processor.generate_story(age, read_time, elements, hobbies, mood) if chunk is not None)
     story_obj = Story(story)
     story_obj.title = llm_content_processor.get_story_title(story)
     story_obj.save_as_json()

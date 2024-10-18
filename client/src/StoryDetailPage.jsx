@@ -1,20 +1,17 @@
 import React, { useEffect, useState} from 'react'
 import {ReactComponent as Logo} from './logo.svg'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 
 const StoryDetailPage = () => {
-
+  const { pageId } = useParams();
   const navigate = useNavigate(); 
 
   const [currentPage, setCurrentPage] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const getStoryCurrentPage = () => {
-
-    // TODO: change the endpoint to '/current_page'
-    
+  const getStoryCurrentPage = () => {    
     setLoading(true);
     fetch('/next_page', {
       method: 'GET',
@@ -38,6 +35,16 @@ const StoryDetailPage = () => {
     getStoryCurrentPage();
   }, [])
 
+  const handleNextPage = () => {
+    const nextPageId = parseInt(pageId, 10) + 1;
+    navigate(`/story/${nextPageId}`);
+  };
+
+  const handlePreviousPage = () => {
+    const previousPageId = parseInt(pageId, 10) - 1;
+    navigate(`/story/${previousPageId}`);
+  };
+
 
   return (
     <>
@@ -45,11 +52,21 @@ const StoryDetailPage = () => {
         <div className='h-40 w-full'>
           <Logo className='h-full w-full'/>
         </div>
+
+        <ul className="steps">
+          <li data-content="" className="step step-primary"></li>
+          <li data-content="" className="step"></li>
+          <li data-content="★" className="step"></li>
+          <li data-content="" className="step"></li>
+          <li data-content="" className="step"></li>
+          <li data-content="●" className="step"></li>
+        </ul>
+
         <h1 className='text-2xl font-bold text-center'>Story Title</h1>
         <div className="flex items-center justify-center gap-8">
-          <img src="/left.png" className='w-20 hover:bg-base-200 cursor-pointer'></img>
+          <img src="/left.png" className='w-20 hover:bg-base-200 cursor-pointer' onClick={handlePreviousPage}></img>
           <img src="https://placehold.co/1000x500"></img>
-          <img src="/next.png" className='w-20 hover:bg-base-200 cursor-pointer' onClick={()=>navigate('/story/2')}></img>
+          <img src="/next.png" className='w-20 hover:bg-base-200 cursor-pointer' onClick={handleNextPage}></img>
         </div>
         <div>
           {loading && <span className="loading loading-dots loading-sm"></span>}
