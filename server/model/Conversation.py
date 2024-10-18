@@ -1,6 +1,7 @@
 class Conversation:
 
-    def __init__(self):
+    def __init__(self, story_uuid: str):
+        self.story_uuid = story_uuid
         self.dialogue = []
     
     def add_message(self, sender: str, message: str):

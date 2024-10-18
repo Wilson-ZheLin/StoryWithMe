@@ -22,10 +22,10 @@ def generate_story():
     elements = user_input["elements"]
     llm_content_processor = LLMServiceViaPortKey()
     story = ''.join(chunk for chunk in llm_content_processor.generate_story(age, read_time, elements) if chunk is not None)
-    app.config['story_object'] = Story(story) # serve as a global variable
-
-    print(app.config['story_object'].content)
-    
+    story_obj = Story(story)
+    story_obj.title = llm_content_processor.get_story_title(story)
+    story_obj.save_as_json()
+    app.config['story_object'] = story_obj # serve as a global variable    
     return jsonify({'story': story})
 
 @app.route("/get_story", methods=["GET"])
@@ -45,6 +45,11 @@ def interact_with_ai():
     response = ''.join(chunk for chunk in llm_content_processor.interact(app.config['dialogue'].get_conversation(), story_of_current_progress) if chunk is not None)
     app.config['dialogue'].add_message('assistant', response)
     return jsonify({'response': response})
+
+@app.route("/current_page", methods=["GET"])
+def current_page():
+    _check_story_created()
+    return jsonify({'story': app.config['story_object'].get_current_page()})
 
 @app.route("/next_page", methods=["GET"])
 def next_page():

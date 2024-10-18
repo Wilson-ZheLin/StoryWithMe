@@ -16,10 +16,10 @@ class StabilityService:
     def generate_image(self, prompt, filename, negative_prompt="", aspect_ratio="16:9", seed=42, output_format='webp'):
         params = {
             "prompt": prompt,
-            "negative_prompt": negative_prompt,
-            "aspect_ratio": aspect_ratio,
+            "negative_prompt": negative_prompt, # elements to exclude from the image
+            "aspect_ratio": aspect_ratio, # 16:9 1:1 21:9 2:3 3:2 4:5 5:4 9:16 9:21
             "seed": seed,
-            "output_format": output_format
+            "output_format": output_format,
         }
 
         # Send request
@@ -119,4 +119,4 @@ class StabilityService:
     
 if __name__ == "__main__":
     stability_service = StabilityService()
-    stability_service.generate_image("Snow White's Castle", "test_name_123")
+    stability_service.generate_image("Snow White's Castle", "test_generation_img")
