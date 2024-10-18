@@ -28,14 +28,13 @@ def generate_story():
     story_obj.title = llm_content_processor.get_story_title(story)
     story_obj.save_as_json()
     app.config['story_object'] = story_obj # serve as a global variable    
-    return jsonify({'story': story})
+    return jsonify({'story': story}) 
 
 @app.route("/get_story", methods=["GET"])
 def get_story():
     _check_story_created()
-    return jsonify({'story': app.config['story_object'].content,
-                    'illustration_links': app.config['story_object'].illustration_links,
-                    'pages': app.config['story_object'].pages})
+    story_obj = app.config['story_object']
+    return jsonify(story_obj.to_dict())
 
 @app.route("/interact", methods=["POST"])
 def interact_with_ai():
