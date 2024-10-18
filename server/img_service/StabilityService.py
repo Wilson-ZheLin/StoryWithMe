@@ -55,7 +55,6 @@ class StabilityService:
             files["none"] = ''
 
         # Send request
-        print(f"Sending REST request to {host}...")
         response = requests.post(
             host,
             headers=headers,
@@ -80,7 +79,6 @@ class StabilityService:
             files = {"image": open(image, 'rb')}
 
         # Send request
-        print(f"Sending REST request to {host}...")
         response = requests.post(
             host,
             headers=headers,

@@ -3,8 +3,8 @@ import { useOutletContext, useNavigate } from 'react-router-dom'
 import {ReactComponent as Logo} from './logo.svg'
 
 const WelcomePage = () => {
-  const navigate = useNavigate(); 
 
+  const navigate = useNavigate(); 
   const { name } = useOutletContext();
 
   const handleStart = () => {

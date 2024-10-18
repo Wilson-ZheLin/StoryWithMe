@@ -9,6 +9,7 @@ const App = () => {
   const [hobbies, setHobbies] = useState([]);
   const [elements, setElements] = useState([]);
   const [mood, setMood] = useState('');
+  const [voice, setVoice] = useState('');
 
   const stateProps = {
     name, setName,
@@ -16,7 +17,8 @@ const App = () => {
     readTime, setReadTime,
     hobbies, setHobbies,
     elements, setElements,
-    mood, setMood
+    mood, setMood,
+    voice, setVoice
   };
 
   return (
@@ -31,6 +33,8 @@ const App = () => {
         <p>Hobbies: {hobbies}</p>
         <p>Elements: {elements}</p>
         <p>Mood: {mood}</p>
+        <p>Voice: {voice}</p>
+
       </div>
 
     </>

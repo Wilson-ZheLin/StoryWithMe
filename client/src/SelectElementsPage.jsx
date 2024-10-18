@@ -46,7 +46,7 @@ const SelectElementsPage = () => {
             </div>
         ))}
       </div>
-      <button className='btn btn-primary' onClick={() => navigate('/story')}>Start my story</button>
+      <button className='btn btn-primary' onClick={() => navigate('/voice_select')}>Next</button>
     </div>
   )
 }

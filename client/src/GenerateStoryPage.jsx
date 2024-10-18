@@ -18,7 +18,7 @@ const GenerateStoryPage = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ age, readTime, elements }) // TODO:add hobbies as a parameter, need to modify the prompt
+      body: JSON.stringify({ age, readTime, elements, mood, hobbies }) 
     })
       .then(res => res.json())
       .then(data => {
@@ -40,14 +40,21 @@ const GenerateStoryPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-6">
-      <h1 className='text-3xl font-bold pt-12 text-center'>Generating the story...</h1>
-          {loading && <span className="loading loading-dots loading-sm"></span>}
-          {error && <p>{error}</p>}
-          {data && (
-          <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
-              <p>{data.story}</p>
-              <button className='btn btn-primary' onClick={()=>navigate('/story/1')}>All set, let's go!</button>
-          </div>
+          {loading && 
+            <div className='flex flex-col items-center justify-center'>
+              <h1 className='text-3xl font-bold pt-12 text-center'>Creating the story...</h1>
+              <img src="/loading_animation.gif" className="w-80 h-auto" alt="loading" />          
+              {/* <span className="loading loading-dots loading-sm"></span> */}
+            </div>
+          }
+          {error && 
+            <p>{error}</p>
+          }
+          {!loading && data && (
+            <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
+                {/* <p>{data.story}</p> */}
+                <button className='btn btn-primary btn-lg btn-wide' onClick={()=>navigate('/story/1')}>All set, let's go!</button>
+            </div>
           )}
     </div>
   )

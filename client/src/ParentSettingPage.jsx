@@ -44,6 +44,7 @@ const ParentSettingPage = () => {
                 <input
                     type="number"
                     className="input input-bordered input-primary w-full max-w-xs required:border-red-500"
+                    placeholder='minutes'
                     value={readTime}
                     onChange={(e) => setReadTime(e.target.value)} />
             </div>
@@ -70,6 +71,12 @@ const ParentSettingPage = () => {
                     className="input input-bordered input-primary w-full max-w-xs"
                     value={hobbies[2]}
                     onChange={(e) => handleHobbies(2, e.target.value)} />
+            </div>
+            <div className='flex flex-col items-center justify-center gap-4'>
+                <label className=''>Would you like to record your voice? If so, please click the microphone</label>
+                {/* TODO: enable voice sample recording */}
+                <img src="/mic.svg" alt="mic" className="w-12 rounded-full bg-secondary hover:cursor-pointer" />
+                <p>Sample Recording text</p>
             </div>
             <button
                 className="btn btn-primary"
