@@ -45,7 +45,7 @@ class Story:
             self.voice_links[i] = ""
         self.save_as_json()
 
-    def _to_dict(self):
+    def to_dict(self):
         return {
             "uuid": self.uuid,
             "content": self.content,
@@ -64,7 +64,7 @@ class Story:
             os.makedirs(story_dir)
         path = os.path.join(story_dir, f"{self.uuid}.json")
         with open(path, 'w', encoding='utf-8') as f:
-            json.dump(self._to_dict(), f, ensure_ascii=False, indent=4)
+            json.dump(self.to_dict(), f, ensure_ascii=False, indent=4)
 
     @staticmethod
     def get_file_path(uuid: str):

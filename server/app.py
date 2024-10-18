@@ -34,7 +34,7 @@ def generate_story():
 @app.route("/get_story", methods=["GET"])
 def get_story():
     _check_story_created()
-    return jsonify(_get_story_object()._to_dict())
+    return jsonify(_get_story_object().to_dict())
 
 @app.route("/interact", methods=["POST"])
 def interact_with_ai():
