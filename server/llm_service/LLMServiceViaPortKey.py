@@ -22,7 +22,6 @@ class LLMServiceViaPortKey:
     def generate_story(self, age: int, read_time: int, elements: list[str], hobbies: list[str] = ["not specified"], mood: str = "not specified"):
         prompt_system = PromptTemplate(input_variables=["age"], template=self.config["story_template_system"]).format(age=age)
         prompt_user = PromptTemplate(input_variables=["read_time", "elements", "mood", "hobbies"], template=self.config["story_template_user"]).format(read_time=read_time, elements=', '.join(elements), mood=mood, hobbies=', '.join(hobbies))
-        print(prompt_system, prompt_user)
         chat_complete = self.client.chat.completions.create(
             model=self.model_name,
             messages=[
