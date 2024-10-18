@@ -1,5 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import {ReactComponent as Logo} from './logo.svg'
+import ProgressBar from './ProgressBar';
 import { useNavigate, useParams } from 'react-router-dom'
 
 
@@ -63,16 +64,7 @@ const StoryDetailPage = () => {
         <div className='h-40 w-full'>
           <Logo className='h-full w-full'/>
         </div>
-
-        <ul className="steps">
-          <li data-content="" className="step step-primary"></li>
-          <li data-content="" className="step"></li>
-          <li data-content="★" className="step"></li>
-          <li data-content="" className="step"></li>
-          <li data-content=""className="step"></li>
-          <li data-content="●" className="step"></li>
-        </ul>
-
+        <ProgressBar pages={story.pages} currentPage={currentPage}/>
         <h1 className='text-2xl font-bold text-center'>{story.title}</h1>
         <div className="flex items-center justify-center gap-8">
           <button disabled={currentPage === 1} onClick={handlePreviousPage}>

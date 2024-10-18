@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import { useOutletContext, useNavigate } from 'react-router-dom'
 import {ReactComponent as Logo} from './logo.svg'
 
@@ -6,6 +6,34 @@ const StoryGalleryPage = () => {
 
   const navigate = useNavigate(); 
   const { name } = useOutletContext();
+
+  const [story, setStory] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const getStory = () => {    
+    setLoading(true);
+    fetch('/get_story', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then(res => res.json())
+    .then(story => {
+      setStory(story);
+      console.log(story);
+      setLoading(false);
+    })
+    .catch(error=>{
+      console.log(error);
+      setError('Error fetching story json');
+      setLoading(false);
+    })
+  }
+
+  useEffect(() => {
+    getStory();
+  }, [])
 
 
   return (
@@ -27,10 +55,10 @@ const StoryGalleryPage = () => {
               className="rounded-xl" />
           </figure>
           <div className="card-body items-center text-center">
-            <h2 className="card-title">Story Title</h2>
+            <h2 className="card-title">{story.title}</h2>
             <p>Created on 2022-01-01</p>
             <div className="card-actions">
-              <button className="btn btn-primary">Read</button>
+              <button className="btn btn-primary" onClick={() => navigate(`/story/1`)}>Read Again</button>
             </div>
           </div>
         </div>
