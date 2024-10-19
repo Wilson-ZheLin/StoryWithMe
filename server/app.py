@@ -2,10 +2,9 @@ from flask import Flask, jsonify, request, abort
 from model.Conversation import Conversation
 from model.Story import Story
 from llm_service.LLMServiceViaPortKey import LLMServiceViaPortKey
-from util import generate_images_for_next_two_pages
+from util import generate_images_for_next_two_pages,generate_voiceover_for_next_two_pages
+
 # from flask_cors import CORS
-
-
 app = Flask(__name__)
 # CORS(app)
 
@@ -35,6 +34,7 @@ def generate_story():
     story_obj.title = llm_content_processor.get_story_title(story_content)
     story_obj.save_as_json() # just to be safe
     generate_images_for_next_two_pages(story_obj)
+    generate_voiceover_for_next_two_pages(story_obj, "Rachel") 
     return jsonify({'story': "\n\n".join(story_obj.parts)})
 
 @app.route("/get_story", methods=["GET"])
