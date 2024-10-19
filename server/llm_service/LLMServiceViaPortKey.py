@@ -62,10 +62,8 @@ class LLMServiceViaPortKey:
         chat_complete = self.client.chat.completions.create(
             model=self.model_name,
             messages=[{"role": "user", "content": prompt_user}],
-            stream=True
         )
-        for chunk in chat_complete:
-            yield chunk.choices[0].delta.content
+        return chat_complete.choices[0].message.content
 
     def get_story_title(self, story: str):
         prompt_user = PromptTemplate(input_variables=["story"], template=self.config["story_title_template"]).format(story=story)

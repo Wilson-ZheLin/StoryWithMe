@@ -2,10 +2,9 @@ from flask import Flask, jsonify, request, abort
 from model.Conversation import Conversation
 from model.Story import Story
 from llm_service.LLMServiceViaPortKey import LLMServiceViaPortKey
-from img_service.ImgService import generate_images_for_next_two_pages
+from util import generate_images_for_next_two_pages
 from voiceover_service.tts_service import TTSService
 from voiceover_service.voice_cloning_service import VoiceCloningService
-
 
 app = Flask(__name__)
 
