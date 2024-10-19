@@ -1,10 +1,15 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect, useRef }  from 'react'
 import { useOutletContext, useNavigate } from 'react-router-dom'
+import Confetti from 'react-confetti'
+// import useWindowSize from 'react-use/lib/useWindowSize'
+
 
 const GenerateStoryPage = () => {
-  const navigate = useNavigate(); 
 
+  const navigate = useNavigate(); 
   const {name, age, readTime, hobbies, elements, mood} = useOutletContext()
+  // const { width, height } = useWindowSize()
+
 
   const [data, setData] = useState({})
   const [loading, setLoading] = useState(false);
@@ -38,6 +43,7 @@ const GenerateStoryPage = () => {
   }, [])
 
 
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-6">
           {loading && 
@@ -53,6 +59,7 @@ const GenerateStoryPage = () => {
           {!loading && data && (
             <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
                 {/* <p>{data.story}</p> */}
+                <Confetti />
                 <button className='btn btn-primary btn-lg btn-wide' onClick={()=>navigate('/story/1')}>All set, let's go!</button>
             </div>
           )}
