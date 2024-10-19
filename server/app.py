@@ -25,10 +25,13 @@ def generate_story():
     elements = user_input["elements"]
     mood = user_input["mood"]
     hobbies = user_input["hobbies"]
+    voice_character = user_input["voiceCharacter"]
+    voice_character_path = user_input["voiceCharacterPath"]
     llm_content_processor = LLMServiceViaPortKey()
     story_content = ''.join(chunk for chunk in llm_content_processor.generate_story(age, read_time, elements, hobbies, mood) if chunk is not None)
     story_obj = Story(story_content)
     app.config['uuid'] = story_obj.uuid
+    story_obj.set_voice_character(voice_character, voice_character_path)
     story_obj.title = llm_content_processor.get_story_title(story_content)
     story_obj.save_as_json() # just to be safe
     generate_images_for_next_two_pages(story_obj)
