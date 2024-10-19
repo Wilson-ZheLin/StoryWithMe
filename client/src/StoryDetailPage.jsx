@@ -38,6 +38,21 @@ const StoryDetailPage = () => {
     getStory();
   }, [currentPage])
 
+  const getNextTwoIllustrations = () =>{
+    fetch('/next_page', {
+      method: 'GET',
+    }).then(res => res.json())
+    .then(data => {
+      console.log(data);
+    }).catch(error=>{
+      console.log(error);
+    })
+  }
+
+  useEffect(() => {
+    getNextTwoIllustrations();
+  }, [story])
+
   const handleNextPage = () => {
     const nextPageId = currentPage + 1;;
     if (nextPageId > story.pages) {
@@ -58,9 +73,8 @@ const StoryDetailPage = () => {
     }
   };
 
-
   return (
-  <>
+    <>
     {loading && <span className="loading loading-dots loading-sm"></span>}
     {error && <p>{error}</p>}
     {story && (
@@ -98,7 +112,8 @@ const StoryDetailPage = () => {
           </div>
         </div>
         )}
-  </>)
+  </>
+  )
 }
 
 export default StoryDetailPage
