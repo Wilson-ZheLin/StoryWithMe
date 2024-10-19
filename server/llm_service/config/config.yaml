@@ -25,7 +25,7 @@ interaction_system: |
 image_prompt_template: |
   This is a part of a children's story:
   {story_chunk}
-  Please extract the key plot of this section and generate a prompt for AI to generate a static illustration. Respond only with the prompt itself, avoiding extra explanations or context.
+  Please extract the key plot of this section and generate a prompt for AI to generate a static illustration. The artist style of the illustration is {style}. Respond only with the prompt itself, avoiding extra explanations or context.
 story_title_template: |
   This is a complete story for children: {story}
   Give a very conscise title for the story based on the content. Respond only with the title, avoiding extra explanations or context.
