@@ -26,7 +26,9 @@ class TTSService:
         Initialize the TTSService class with paths and optional dependencies.
         """
         self.session_file = os.path.join(os.path.dirname(__file__), "sessions.json")
-        self.output_dir = os.path.join(os.path.dirname(__file__), "voice_output")
+        # self.output_dir = os.path.join(os.path.dirname(__file__), "voice_output")
+        self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) # server dir
+        self.output_dir = os.path.join(self.base_dir, "static", "voice_output") 
 
     def text_to_speech_stream_raw(self, text: str) -> IO[bytes]:
         """
@@ -174,7 +176,7 @@ class TTSService:
             output_file = os.path.join(session_dir, f"audio_{i}.mp3")
             save(audio, output_file)
             # Append the relative path (relative to the output_dir)
-            relative_path = os.path.relpath(output_file, self.output_dir)
+            relative_path = os.path.relpath(output_file, self.base_dir)
             audio_paths.append(relative_path)
         
         # Update session metadata
