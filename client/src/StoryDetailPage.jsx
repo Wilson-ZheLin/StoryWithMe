@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react'
 import {ReactComponent as Logo} from './logo.svg'
 import ProgressBar from './ProgressBar';
 import { useNavigate, useParams } from 'react-router-dom'
+import InteractionWindow from './InteractionWindow';
 
 
 const StoryDetailPage = () => {
@@ -57,28 +58,20 @@ const StoryDetailPage = () => {
     }
   };
 
-  const illustrationLinks = story.illustration_links;
-  if (!illustrationLinks) {
-    console.log('no illustration links');
-  } 
-  const current_illustration = illustrationLinks[`${currentPage - 1}`];
-  if (!current_illustration) {
-    console.log('no current illustration');
-  }
 
   return (
-    <>
-      <div className='flex flex-col items-center justify-start min-h-screen gap-4'>
-        <div className='h-40 w-full'>
-          <Logo className='h-full w-full'/>
-        </div>
-        {loading && <span className="loading loading-dots loading-sm"></span>}
-        {error && <p>{error}</p>}
-        {story && (
-          <>
+  <>
+    {loading && <span className="loading loading-dots loading-sm"></span>}
+    {error && <p>{error}</p>}
+    {story && (
+        <div className='flex flex-col items-center justify-start min-h-screen gap-4'>
+          <div className='h-40 w-full'>
+            <Logo className='h-full w-full'/>
+          </div>
+          <div className='flex flex-col items-center justify-center gap-8'>
             <ProgressBar pages={story.pages} currentPage={currentPage}/>
             <h1 className='text-2xl font-bold text-center'>{story.title}</h1>
-            <div className="flex items-center justify-center gap-8">
+            <div className="flex flex-row items-center justify-center px-2">
               <button disabled={currentPage === 1} onClick={handlePreviousPage}>
                 <img 
                   src="/left.png" 
@@ -87,8 +80,10 @@ const StoryDetailPage = () => {
               </button>
               
               {/* display the current illustration here */}
-              <img src="http://127.0.0.1:5000/static/img/test_generation_img.webp" alt="story illustration"></img>
-              
+              <figure className='px-4 w-[1000px] h-[500px]'>
+                <img className='object-cover w-full h-full'  src={`http://127.0.0.1:5000/static/img/${story.illustration_links[parseInt(currentPage, 10) - 1]}`} alt="story illustration"></img>
+              </figure>
+
               <button onClick={handleNextPage}>
                 <img 
                   src="/next.png" 
@@ -99,11 +94,11 @@ const StoryDetailPage = () => {
             <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
                 <p>{story.parts[currentPage - 1]}</p>
             </div>
-          </>
-      )}
+            <InteractionWindow />
+          </div>
         </div>
-    </>
-  )
+        )}
+  </>)
 }
 
 export default StoryDetailPage
