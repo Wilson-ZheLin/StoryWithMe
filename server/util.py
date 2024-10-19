@@ -1,11 +1,7 @@
-import os
-import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from .StabilityService import StabilityService
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from llm_service.LLMServiceViaPortKey import LLMServiceViaPortKey
 from model.Story import Story
+from img_service.StabilityService import StabilityService
+from llm_service.LLMServiceViaPortKey import LLMServiceViaPortKey
 
 def generate_images_for_next_two_pages(story: Story):
     img_service = StabilityService()
