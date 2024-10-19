@@ -57,6 +57,14 @@ const StoryDetailPage = () => {
     }
   };
 
+  const illustrationLinks = story.illustration_links;
+  if (!illustrationLinks) {
+    console.log('no illustration links');
+  } 
+  const current_illustration = illustrationLinks[`${currentPage - 1}`];
+  if (!current_illustration) {
+    console.log('no current illustration');
+  }
 
   return (
     <>
@@ -64,33 +72,36 @@ const StoryDetailPage = () => {
         <div className='h-40 w-full'>
           <Logo className='h-full w-full'/>
         </div>
-        <ProgressBar pages={story.pages} currentPage={currentPage}/>
-        <h1 className='text-2xl font-bold text-center'>{story.title}</h1>
-        <div className="flex items-center justify-center gap-8">
-          <button disabled={currentPage === 1} onClick={handlePreviousPage}>
-            <img 
-              src="/left.png" 
-              className={`w-20  ${currentPage === 1 ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer hover:bg-base-200'}`} 
-              alt="previous page"></img>
-          </button>
-          <img src="https://placehold.co/1000x500"></img>
-          <button onClick={handleNextPage}>
-            <img 
-              src="/next.png" 
-              className='w-20 hover:bg-base-200 cursor-pointer' 
-              alt="next page"></img>
-          </button>
+        {loading && <span className="loading loading-dots loading-sm"></span>}
+        {error && <p>{error}</p>}
+        {story && (
+          <>
+            <ProgressBar pages={story.pages} currentPage={currentPage}/>
+            <h1 className='text-2xl font-bold text-center'>{story.title}</h1>
+            <div className="flex items-center justify-center gap-8">
+              <button disabled={currentPage === 1} onClick={handlePreviousPage}>
+                <img 
+                  src="/left.png" 
+                  className={`w-20  ${currentPage === 1 ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer hover:bg-base-200'}`} 
+                  alt="previous page"></img>
+              </button>
+              
+              {/* display the current illustration here */}
+              <img src="http://127.0.0.1:5000/static/img/test_generation_img.webp" alt="story illustration"></img>
+              
+              <button onClick={handleNextPage}>
+                <img 
+                  src="/next.png" 
+                  className='w-20 hover:bg-base-200 cursor-pointer' 
+                  alt="next page"></img>
+              </button>
+            </div>
+            <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
+                <p>{story.parts[currentPage - 1]}</p>
+            </div>
+          </>
+      )}
         </div>
-        <div>
-          {loading && <span className="loading loading-dots loading-sm"></span>}
-          {error && <p>{error}</p>}
-          {story && (
-          <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
-              <p>{story.parts[currentPage - 1]}</p>
-          </div>
-        )}
-        </div>
-      </div>
     </>
   )
 }
