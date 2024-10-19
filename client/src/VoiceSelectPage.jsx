@@ -26,12 +26,6 @@ const VoiceSelectPage = () => {
       <h1 className="text-3xl font-bold text-center">Which friend would you like to create a story with?</h1>
       <div className="flex gap-3">
         <img
-          src="/olive.svg"
-          alt="remy"
-          className={`w-36 cursor-pointer hover:bg-base-200 ${selectedVoice === 'remy' ? 'bg-base-200' : ''}`}
-          onClick={handleVoice}
-        />
-        <img
           src="/skyler.svg"
           alt="skyler"
           className={`w-36 cursor-pointer hover:bg-base-200 ${selectedVoice === 'skyler' ? 'bg-base-200' : ''}`}
@@ -47,6 +41,12 @@ const VoiceSelectPage = () => {
           src="/olive.svg"
           alt="olive"
           className={`w-36 cursor-pointer hover:bg-base-200 ${selectedVoice === 'olive' ? 'bg-base-200' : ''}`}
+          onClick={handleVoice}
+        />
+        <img
+          src="/remy.svg"
+          alt="remy"
+          className={`w-36 cursor-pointer hover:bg-base-200 ${selectedVoice === 'remy' ? 'bg-base-200' : ''}`}
           onClick={handleVoice}
         />
       </div>
