@@ -13,7 +13,7 @@ class Story:
         self.voice_links = {i: "" for i in range(self.pages)}
         self.cursor = -1
         self.title = ""
-        self.narrator = "Rachel"
+        self.voice_charcater = dict()
     
     def next_page(self) -> str:
         if self.cursor >= self.pages - 1:
@@ -37,6 +37,12 @@ class Story:
     def get_current_progress_parts(self) -> str:
         return ' '.join(self.parts[:self.cursor + 1])
     
+    def set_voice_character(self, voice_character: str, voice_character_path: str):
+        self.voice_charcater = {
+            "voice_character": voice_character,
+            "voice_character_path": voice_character_path
+        }
+    
     def recreate_story(self, new_story_content: str):
         self.parts = self.parts[:self.cursor + 1] + [part.strip() for part in new_story_content.split("||") if part.strip()]
         self.content = '\n || \n'.join(self.parts)
@@ -56,7 +62,7 @@ class Story:
             "pages": self.pages,
             "cursor": self.cursor,
             "title": self.title,
-            "narrator": self.narrator
+            "voice_charcater": self.voice_charcater
         }
 
     def save_as_json(self):
