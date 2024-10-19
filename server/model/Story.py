@@ -13,6 +13,7 @@ class Story:
         self.voice_links = {i: "" for i in range(self.pages)}
         self.cursor = -1
         self.title = ""
+        self.narrator = "Rachel"
     
     def next_page(self) -> str:
         if self.cursor >= self.pages - 1:
@@ -54,7 +55,8 @@ class Story:
             "voice_links": self.voice_links,
             "pages": self.pages,
             "cursor": self.cursor,
-            "title": self.title
+            "title": self.title,
+            "narrator": self.narrator
         }
 
     def save_as_json(self):
