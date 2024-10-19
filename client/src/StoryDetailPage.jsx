@@ -13,6 +13,8 @@ const StoryDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(parseInt(pageId, 10));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [audioUrl, setAudioUrl] = useState(null);
+
 
   const getStory = () => {    
     setLoading(true);
@@ -24,6 +26,7 @@ const StoryDetailPage = () => {
     }).then(res => res.json())
     .then(story => {
       setStory(story);
+      // setAudioUrl(`http://127.0.0.1:5000/${story.voice_links[parseInt(currentPage, 10) - 1]}`);
       console.log(story);
       setLoading(false);
     })
@@ -49,9 +52,16 @@ const StoryDetailPage = () => {
     })
   }
 
-  useEffect(() => {
-    getNextTwoIllustrations();
-  }, [story])
+  // useEffect(() => {
+  //   playAudio();
+  // }, [story])
+
+  // const playAudio = () =>{
+  //   if (audioUrl) {
+  //     const audio = new Audio(audioUrl);
+  //     audio.play();
+  //   }
+  // }
 
   const handleNextPage = () => {
     const nextPageId = currentPage + 1;;
@@ -60,6 +70,8 @@ const StoryDetailPage = () => {
     } else {
       setCurrentPage(nextPageId);
       navigate(`/story/${nextPageId}`);
+      getNextTwoIllustrations();
+
     }
   };
 
