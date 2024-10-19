@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react'
 import {ReactComponent as Logo} from './logo.svg'
 import ProgressBar from './ProgressBar';
 import { useNavigate, useParams } from 'react-router-dom'
+import InteractionWindow from './InteractionWindow';
 
 
 const StoryDetailPage = () => {
@@ -59,40 +60,45 @@ const StoryDetailPage = () => {
 
 
   return (
-    <>
-      <div className='flex flex-col items-center justify-start min-h-screen gap-4'>
-        <div className='h-40 w-full'>
-          <Logo className='h-full w-full'/>
-        </div>
-        <ProgressBar pages={story.pages} currentPage={currentPage}/>
-        <h1 className='text-2xl font-bold text-center'>{story.title}</h1>
-        <div className="flex items-center justify-center gap-8">
-          <button disabled={currentPage === 1} onClick={handlePreviousPage}>
-            <img 
-              src="/left.png" 
-              className={`w-20  ${currentPage === 1 ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer hover:bg-base-200'}`} 
-              alt="previous page"></img>
-          </button>
-          <img src="https://placehold.co/1000x500"></img>
-          <button onClick={handleNextPage}>
-            <img 
-              src="/next.png" 
-              className='w-20 hover:bg-base-200 cursor-pointer' 
-              alt="next page"></img>
-          </button>
-        </div>
-        <div>
-          {loading && <span className="loading loading-dots loading-sm"></span>}
-          {error && <p>{error}</p>}
-          {story && (
-          <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
-              <p>{story.parts[currentPage - 1]}</p>
+  <>
+    {loading && <span className="loading loading-dots loading-sm"></span>}
+    {error && <p>{error}</p>}
+    {story && (
+        <div className='flex flex-col items-center justify-start min-h-screen gap-4'>
+          <div className='h-40 w-full'>
+            <Logo className='h-full w-full'/>
           </div>
-        )}
+          <div className='flex flex-col items-center justify-center gap-8'>
+            <ProgressBar pages={story.pages} currentPage={currentPage}/>
+            <h1 className='text-2xl font-bold text-center'>{story.title}</h1>
+            <div className="flex flex-row items-center justify-center px-2">
+              <button disabled={currentPage === 1} onClick={handlePreviousPage}>
+                <img 
+                  src="/left.png" 
+                  className={`w-20  ${currentPage === 1 ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer hover:bg-base-200'}`} 
+                  alt="previous page"></img>
+              </button>
+              
+              {/* display the current illustration here */}
+              <figure className='px-4 w-[1000px] h-[500px]'>
+                <img className='object-cover w-full h-full'  src={`http://127.0.0.1:5000/static/img/${story.illustration_links[parseInt(currentPage, 10) - 1]}`} alt="story illustration"></img>
+              </figure>
+
+              <button onClick={handleNextPage}>
+                <img 
+                  src="/next.png" 
+                  className='w-20 hover:bg-base-200 cursor-pointer' 
+                  alt="next page"></img>
+              </button>
+            </div>
+            <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
+                <p>{story.parts[currentPage - 1]}</p>
+            </div>
+            <InteractionWindow />
+          </div>
         </div>
-      </div>
-    </>
-  )
+        )}
+  </>)
 }
 
 export default StoryDetailPage
