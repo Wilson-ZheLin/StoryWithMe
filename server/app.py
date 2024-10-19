@@ -3,8 +3,11 @@ from model.Conversation import Conversation
 from model.Story import Story
 from llm_service.LLMServiceViaPortKey import LLMServiceViaPortKey
 from util import generate_images_for_next_two_pages
+# from flask_cors import CORS
+
 
 app = Flask(__name__)
+# CORS(app)
 
 # Store as global variables
 app.config['dialogue'] = None
