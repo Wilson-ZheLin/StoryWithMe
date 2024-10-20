@@ -57,8 +57,8 @@ class LLMServiceViaPortKey:
         for chunk in chat_complete:
             yield chunk.choices[0].delta.content
 
-    def generate_img_prompt(self, story_chunk: str, style: str = "Hayao Miyazaki"):
-        prompt_user = PromptTemplate(input_variables=["story_chunk", "style"], template=self.config["image_prompt_template"]).format(story_chunk=story_chunk, style=style)
+    def generate_img_prompt(self, story_chunk: str, story: str, style: str = "Hayao Miyazaki"):
+        prompt_user = PromptTemplate(input_variables=["story_chunk", "style", "story"], template=self.config["image_prompt_template"]).format(story_chunk=story_chunk, style=style, story=story)
         chat_complete = self.client.chat.completions.create(
             model=self.model_name,
             messages=[{"role": "user", "content": prompt_user}],

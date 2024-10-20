@@ -30,6 +30,7 @@ def generate_story():
     voice_character_path = user_input["voiceCharacterPath"]
     llm_content_processor = LLMServiceViaPortKey()
     story_content = ''.join(chunk for chunk in llm_content_processor.generate_story(age, read_time, elements, hobbies, mood) if chunk is not None)
+    story_content = story_content.replace(" The end!", "")
     story_obj = Story(story_content)
     app.config['uuid'] = story_obj.uuid
     story_obj.set_voice_character(voice_character, voice_character_path)
