@@ -85,7 +85,7 @@ const ParentSettingPage = () => {
                 </div>
                 <div className="form-control">
                 <label className="cursor-pointer label">
-                    <input type="checkbox" defaultChecked className="checkbox checkbox-info" />
+                    <input type="checkbox" className="checkbox checkbox-info" />
                     <span className="label-text pl-5">By checking this box, I consent to the use of my input data and voice recordings for AI story generation, understanding that my data will be handled responsibly and securely</span>
                 </label>
                 </div>
