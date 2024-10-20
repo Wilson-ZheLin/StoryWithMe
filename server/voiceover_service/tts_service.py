@@ -24,7 +24,7 @@ class TTSService:
     voice_map = {
         "skyler": "5HuFhTDIKwL0cGenPHbW",
         "thor": "INHnGXKnJqauobZLfeOV",
-        "olive": "rrMMAo6MoUPTPv1w4jHj",
+        "olive": "SgTNj9yF9IHj6KwO6pZf",
         "remy": "0m2tDjDewtOfXrhxqgrJ"
     }
     def __init__(self):

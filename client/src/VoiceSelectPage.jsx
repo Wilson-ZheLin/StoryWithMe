@@ -19,7 +19,7 @@ const VoiceSelectPage = () => {
         if (audio){
           audio.pause()
         }
-        if(!e.target.alt==='parent'){
+        if (e.target.alt !== 'Parent') {
           const audioFile = `/${e.target.alt}_Intro.mp3`; 
           setAudio(new Audio(audioFile));
         }
