@@ -46,7 +46,7 @@ def get_story():
     _check_story_created()
     return jsonify(_get_story_object().to_dict())
 
-@app.route('/upload-parent', methods=['POST'])
+@app.route('/upload-audio', methods=['POST'])
 def upload_audio():
     if 'audio' not in request.files:
         return jsonify({'status': 'error', 'message': 'No file part'}), 400
