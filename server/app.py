@@ -32,6 +32,7 @@ def generate_story():
     app.config['uuid'] = story_obj.uuid
     # story_obj.set_voice_character(voice_character, voice_character_path)
     story_obj.title = llm_content_processor.get_story_title(story_content)
+    story_obj.question = llm_content_processor.get_interaction_prompt("\n".join(story_obj.parts[:3]))
     story_obj.save_as_json() # just to be safe
     generate_images_for_next_two_pages(story_obj)
     generate_voiceover_for_next_two_pages(story_obj, "Rachel") 

@@ -14,6 +14,7 @@ class Story:
         self.cursor = -1
         self.title = ""
         self.voice_charcater = dict()
+        self.question = ""
     
     def next_page(self) -> str:
         if self.cursor >= self.pages - 1:
@@ -62,7 +63,8 @@ class Story:
             "pages": self.pages,
             "cursor": self.cursor,
             "title": self.title,
-            "voice_charcater": self.voice_charcater
+            "voice_charcater": self.voice_charcater,
+            "question": self.question
         }
 
     def save_as_json(self):
