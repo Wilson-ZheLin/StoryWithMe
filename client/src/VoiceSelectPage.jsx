@@ -19,8 +19,10 @@ const VoiceSelectPage = () => {
         if (audio){
           audio.pause()
         }
-        const audioFile = `/${e.target.alt}_Intro.mp3`; 
-        setAudio(new Audio(audioFile));
+        if(!e.target.alt==='parent'){
+          const audioFile = `/${e.target.alt}_Intro.mp3`; 
+          setAudio(new Audio(audioFile));
+        }
     }
 
     useEffect(() => {

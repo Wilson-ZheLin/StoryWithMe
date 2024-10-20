@@ -21,6 +21,12 @@ except ImportError:
 
 
 class TTSService:
+    voice_map = {
+        "skyler": "5HuFhTDIKwL0cGenPHbW",
+        "thor": "INHnGXKnJqauobZLfeOV",
+        "olive": "rrMMAo6MoUPTPv1w4jHj",
+        "remy": "0m2tDjDewtOfXrhxqgrJ"
+    }
     def __init__(self):
         """
         Initialize the TTSService class with paths and optional dependencies.
@@ -29,23 +35,8 @@ class TTSService:
         # self.output_dir = os.path.join(os.path.dirname(__file__), "voice_output")
         self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) # server dir
         self.output_dir = os.path.join(self.base_dir, "static", "voice_output") 
-        self.voice_map = {
-            "skyler": "5HuFhTDIKwL0cGenPHbW",
-            "thor": "INHnGXKnJqauobZLfeOV",
-            "olive": "rrMMAo6MoUPTPv1w4jHj",
-            "remy": "0m2tDjDewtOfXrhxqgrJ"
-        }
 
-    def add_voice(self, name: str, voice_id: str):
-        """
-        Adds a new voice to the voice map.
-        
-        Args:
-            name (str): The name of the new voice.
-            voice_id (str): The corresponding voice ID.
-        """
-        self.voice_map[name.lower()] = voice_id
-        
+                
     def text_to_speech_stream_raw(self, text: str) -> IO[bytes]:
         """
         Converts text to speech and returns the audio data as a byte stream.
@@ -218,3 +209,26 @@ class TTSService:
             self.play_audio_raw(audio_stream)
         else:
             print("Audio playback is not available because `pydub` is not installed.")
+    
+    @classmethod
+    def get_voice_map(cls):
+        """
+        Returns the shared voice map.
+        
+        Returns:
+            dict: The shared voice map.
+        """
+        return cls.voice_map
+    
+    @classmethod
+    def add_voice(cls, name: str, voice_id: str):
+        """
+        Adds a new voice to the shared voice map.
+        
+        Args:
+            name (str): The name of the new voice.
+            voice_id (str): The corresponding voice ID.
+        """
+        cls.voice_map[name.lower()] = voice_id
+        print("Added voice:")
+        print(cls.voice_map)

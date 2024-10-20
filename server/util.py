@@ -38,7 +38,12 @@ def generate_voiceover_for_next_two_pages(story: Story, narrator: str = "Rachel"
     curr_page = story.cursor
     input_arr = []
     index_map = []   
-    voice_map = tts_service.voice_map
+    voice_map = tts_service.get_voice_map()
+    
+    # print("generate_2")
+    # print(voice_map)
+    # print(story.voice_charcater["voice_character"].lower())
+    # print(voice_map[story.voice_charcater["voice_character"].lower()])
     
     if(story.voice_charcater["voice_character"].lower() in voice_map):
         narrator = voice_map[story.voice_charcater["voice_character"].lower()]
