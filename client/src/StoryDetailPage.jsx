@@ -52,16 +52,16 @@ const StoryDetailPage = () => {
     })
   }
 
-  // useEffect(() => {
-  //   playAudio();
-  // }, [story])
+  useEffect(() => {
+    playAudio();
+  }, [story])
 
-  // const playAudio = () =>{
-  //   if (audioUrl) {
-  //     const audio = new Audio(audioUrl);
-  //     audio.play();
-  //   }
-  // }
+  const playAudio = () =>{
+    if (audioUrl) {
+      const audio = new Audio(audioUrl);
+      audio.play();
+    }
+  }
 
   const handleNextPage = () => {
     const nextPageId = currentPage + 1;;
