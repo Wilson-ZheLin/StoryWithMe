@@ -4,13 +4,14 @@ import {Outlet} from 'react-router-dom'
 const App = () => {
 
   const [name, setName] = useState('');
-  const [age, setAge] = useState(0);
-  const [readTime, setReadTime] = useState(0);
+  const [age, setAge] = useState('');
+  const [readTime, setReadTime] = useState('');
   const [hobbies, setHobbies] = useState([]);
   const [elements, setElements] = useState([]);
   const [mood, setMood] = useState('');
   const [voiceCharacter, setVoiceCharacter] = useState('');
   const [voiceCharacterPath, setVoiceCharacterPath] = useState('');
+  const [parentVoice, setParentVoice] = useState(false);
 
 
   const stateProps = {
@@ -22,6 +23,7 @@ const App = () => {
     mood, setMood,
     voiceCharacter, setVoiceCharacter,
     voiceCharacterPath, setVoiceCharacterPath,
+    parentVoice, setParentVoice
   };
 
   return (
@@ -37,6 +39,7 @@ const App = () => {
         <p>Elements: {elements}</p>
         <p>Mood: {mood}</p>
         <p>Voice: {voiceCharacter}</p>
+        <p>Parent voice: {parentVoice}</p>
 
       </div>
 

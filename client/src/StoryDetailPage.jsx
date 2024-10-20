@@ -1,16 +1,14 @@
-import React, { useEffect, useState} from 'react'
-import {ReactComponent as Logo} from './logo.svg'
-import ProgressBar from './ProgressBar';
-import { useNavigate, useParams } from 'react-router-dom'
-import KidResponseRecorder from './KidResponseRecorder';
-
-
+import React, { useEffect, useState } from "react";
+import { ReactComponent as Logo } from "./logo.svg";
+import ProgressBar from "./ProgressBar";
+import { useNavigate, useParams } from "react-router-dom";
+import KidResponseRecorder from "./KidResponseRecorder";
 
 const StoryDetailPage = () => {
   const { pageId } = useParams();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  const [story, setStory] = useState('');
+  const [story, setStory] = useState("");
   const [currentPage, setCurrentPage] = useState(parseInt(pageId, 10));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -18,61 +16,68 @@ const StoryDetailPage = () => {
   const [audio, setAudio] = useState(null);
   const [showVoiceRecorder, setShowVoiceRecorder] = useState(false);
 
-  const getStory = () => {    
+  const getStory = () => {
     setLoading(true);
-    fetch('/get_story', {
-      method: 'GET',
+    fetch("/get_story", {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-    }).then(res => res.json())
-    .then(story => {
-      setStory(story);
-      setAudioUrl(`http://127.0.0.1:5000/${story.voice_links[parseInt(currentPage, 10) - 1]}`);
-      console.log(story);
-      setLoading(false);
     })
-    .catch(error=>{
-      console.log(error);
-      setError('Error fetching story json');
-      setLoading(false);
-    })
-  }
+      .then((res) => res.json())
+      .then((story) => {
+        setStory(story);
+        setAudioUrl(
+          `http://127.0.0.1:5000/${
+            story.voice_links[parseInt(currentPage, 10) - 1]
+          }`
+        );
+        console.log(story);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError("Error fetching story json");
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
     getStory();
-  }, [currentPage])
+  }, [currentPage]);
 
-  const getNextTwoIllustrations = () =>{
-    fetch('/next_page', {
-      method: 'GET',
-    }).then(res => res.json())
-    .then(data => {
-      console.log(data);
-    }).catch(error=>{
-      console.log(error);
+  const getNextTwoIllustrations = () => {
+    fetch("/next_page", {
+      method: "GET",
     })
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     playAudio();
-  }, [story])
+  }, [story]);
 
-  const playAudio = () =>{
+  const playAudio = () => {
     if (audioUrl) {
       const audioObj = new Audio(audioUrl);
       setAudio(audioObj);
       audioObj.play();
     }
-  }
+  };
 
   const handleNextPage = () => {
     if (audio) {
       audio.pause();
     }
-    const nextPageId = currentPage + 1;;
+    const nextPageId = currentPage + 1;
     if (nextPageId > story.pages) {
-      navigate('/story_gallery');
+      navigate("/story_gallery");
     } else {
       setCurrentPage(nextPageId);
       navigate(`/story/${nextPageId}`);
@@ -84,7 +89,7 @@ const StoryDetailPage = () => {
     if (audio) {
       audio.pause();
     }
-    const prevPageId = currentPage - 1
+    const prevPageId = currentPage - 1;
     if (prevPageId < 1) {
       return;
     } else {
@@ -93,46 +98,57 @@ const StoryDetailPage = () => {
     }
   };
 
-
   return (
     <>
-    {loading && <span className="loading loading-dots loading-sm"></span>}
-    {error && <p>{error}</p>}
-    {story && (
-        <div className='flex flex-col items-center justify-start min-h-screen gap-4'>
-          <div className='h-40 w-full'>
-            <Logo className='h-full w-full'/>
+      {loading && <span className="loading loading-dots loading-sm"></span>}
+      {error && <p>{error}</p>}
+      {story && (
+        <div className="flex flex-col items-center justify-start min-h-screen gap-4">
+          <div className="h-40 w-full">
+            <Logo className="h-full w-full" />
           </div>
-          <div className='flex flex-col items-center justify-center gap-8'>
-            <ProgressBar pages={story.pages} currentPage={currentPage}/>
-            <h1 className='text-2xl font-bold text-center'>{story.title}</h1>
+          <div className="flex flex-col items-center justify-center gap-8">
+            <ProgressBar pages={story.pages} currentPage={currentPage} />
+            <h1 className="text-2xl font-bold text-center">{story.title}</h1>
             <div className="flex flex-row items-center justify-center px-2">
               <button disabled={currentPage === 1} onClick={handlePreviousPage}>
-                <img 
-                  src="/left.png" 
-                  className={`w-20  ${currentPage === 1 ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer hover:bg-base-200'}`} 
-                  alt="previous page"></img>
+                <img
+                  src="/left.png"
+                  className={`w-20  ${
+                    currentPage === 1
+                      ? "opacity-20 cursor-not-allowed"
+                      : "cursor-pointer hover:bg-base-200"
+                  }`}
+                  alt="previous page"
+                ></img>
               </button>
-              
+
               {/* display the current illustration here */}
-              <figure className='px-4 w-[1000px] h-[500px]'>
-                <img className='object-cover w-full h-full'  src={`http://127.0.0.1:5000/static/img/${story.illustration_links[parseInt(currentPage, 10) - 1]}`} alt="story illustration"></img>
+              <figure className="px-4 w-[1000px] h-[500px]">
+                <img
+                  className="object-cover w-full h-full"
+                  src={`http://127.0.0.1:5000/static/img/${
+                    story.illustration_links[parseInt(currentPage, 10) - 1]
+                  }`}
+                  alt="story illustration"
+                ></img>
               </figure>
 
               <button onClick={handleNextPage}>
-                <img 
-                  src="/next.png" 
-                  className='w-20 hover:bg-base-200 cursor-pointer' 
-                  alt="next page"></img>
+                <img
+                  src="/next.png"
+                  className="w-20 hover:bg-base-200 cursor-pointer"
+                  alt="next page"
+                ></img>
               </button>
             </div>
             <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
-                <p>{story.parts[currentPage - 1]}</p>
+              <p>{story.parts[currentPage - 1]}</p>
             </div>
-            
+
             {/* interaction window */}
-            {currentPage === 3 && 
-              <div className="flex justify-between" >
+            {currentPage === 3 && (
+              <div className="flex justify-between">
                 {/* voic character */}
                 <div className="chat chat-start">
                   <div className="chat-image avatar">
@@ -154,15 +170,12 @@ const StoryDetailPage = () => {
                   <KidResponseRecorder />
                 </div>
               </div>
-            
-            }
-
-
+            )}
           </div>
         </div>
-        )}
-  </>
-  )
-}
+      )}
+    </>
+  );
+};
 
-export default StoryDetailPage
+export default StoryDetailPage;
