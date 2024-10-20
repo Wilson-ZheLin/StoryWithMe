@@ -37,6 +37,13 @@ def generate_voiceover_for_next_two_pages(story: Story, narrator: str = "Rachel"
     curr_page = story.cursor
     input_arr = []
     index_map = []   
+    voice_map = {"skyler":"5HuFhTDIKwL0cGenPHbW",
+                 "thor":"INHnGXKnJqauobZLfeOV",
+                 "olive":"SgTNj9yF9IHj6KwO6pZf",
+                 "remy":"0m2tDjDewtOfXrhxqgrJ"}
+    
+    if(story.voice_charcater in voice_map):
+        narrator = voice_map[story.voice_charcater]
     
     for i in range(curr_page + 1, curr_page + 3):
         if i >= story.pages:

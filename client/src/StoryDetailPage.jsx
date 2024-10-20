@@ -2,7 +2,6 @@ import React, { useEffect, useState} from 'react'
 import {ReactComponent as Logo} from './logo.svg'
 import ProgressBar from './ProgressBar';
 import { useNavigate, useParams } from 'react-router-dom'
-import InteractionWindow from './InteractionWindow';
 
 
 const StoryDetailPage = () => {
@@ -120,7 +119,33 @@ const StoryDetailPage = () => {
             <div className="max-w-7xl flex flex-col items-center justify-center gap-6">
                 <p>{story.parts[currentPage - 1]}</p>
             </div>
-            <InteractionWindow />
+            
+            {/* interaction window */}
+            <div className="flex justify-between" >
+              {/* voic character */}
+              <div className="chat chat-start">
+                <div className="chat-image avatar">
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Tailwind CSS chat bubble component"
+                      src={story.voice_charcater["voice_character_path"]}
+                    />
+                  </div>
+                </div>
+                <div className="chat-header">
+                  {story.voice_charcater["voice_character"]}
+                </div>
+                <div className="chat-bubble">Prompt a question based on the current story progress.</div>
+              </div>
+
+              {/* kid's response */}
+              <div className="chat chat-end">
+                <button className="btn btn-circle">
+                  <img src="/speak.svg" alt="speakIcon" />
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
         )}
