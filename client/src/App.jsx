@@ -31,7 +31,7 @@ const App = () => {
       <Outlet context={stateProps} />
       
       {/* display for testing */}
-      <div className="flex flex-col justify-left p-2">
+      {/* <div className="flex flex-col justify-left p-2">
         <p>Name: {name}</p>
         <p>Age: {age}</p>
         <p>Readtime: {readTime}</p>
@@ -41,7 +41,7 @@ const App = () => {
         <p>Voice: {voiceCharacter}</p>
         <p>Parent voice: {parentVoice}</p>
 
-      </div>
+      </div> */}
 
     </>
 

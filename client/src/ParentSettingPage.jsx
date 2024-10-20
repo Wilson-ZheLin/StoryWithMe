@@ -77,11 +77,17 @@ const ParentSettingPage = () => {
                     value={hobbies[2]}
                     onChange={(e) => handleHobbies(2, e.target.value)} />
             </div>
-            <div className='flex flex-col items-center justify-center gap-4 px-52'>
+            <div className='flex flex-col items-center justify-center gap-4 px-52 w-4/5'>
                 <p className='font-bold'>If you'd like, you can record your voice here to be used in the story:</p>
                 <p>Once upon a time, a little bird named Pip lived in a cozy nest high up in a big oak tree. One sunny morning, Pip wanted to learn how to fly. “Flap your wings!” his friends chirped. So Pip flapped and flapped, but he was too scared to jump. Then, his best friend, a squirrel named Nutty, said, “I’ll be right here to catch you if you fall!” Pip took a deep breath, flapped his wings, and leaped from the branch. To his surprise, he soared through the sky! Pip flew in circles, happy and proud, knowing his friends would always be there to cheer him on. And from that day on, Pip never stopped flying!</p>
                 <div className='flex gap-6'>
                     <ParentVoiceRecorder />
+                </div>
+                <div className="form-control">
+                <label className="cursor-pointer label">
+                    <input type="checkbox" defaultChecked className="checkbox checkbox-info" />
+                    <span className="label-text pl-5">By checking this box, I consent to the use of my input data and voice recordings for AI story generation, understanding that my data will be handled responsibly and securely</span>
+                </label>
                 </div>
             </div>
             <button
