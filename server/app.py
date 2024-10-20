@@ -57,8 +57,11 @@ def upload_audio():
         jsonify({'status': 'error', 'message': 'File upload failed'}), 400
 
     if file:
-        filename = file.filename
-        sample_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"voiceover_service", "voice_samples", "parent.wav")
+        save_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voiceover_service", "voice_samples")
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        sample_path = os.path.join(save_dir, "parent.wav")
         file.save(sample_path)
         clone_user_voice(sample_path)
         return 'Audio cloned successfully', 200
@@ -74,7 +77,11 @@ def upload_audio_for_kid():
         jsonify({'status': 'error', 'message': 'File upload failed'}), 400
 
     if file:
-        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"voiceover_service", "voice_samples", "kid.wav")
+        save_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voiceover_service", "voice_samples")
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        file_path = os.path.join(save_dir, "kid_recording.wav")
         file.save(file_path)
         voice_text = voice_to_text(file_path)
         llm_content_processor = LLMServiceViaPortKey()
