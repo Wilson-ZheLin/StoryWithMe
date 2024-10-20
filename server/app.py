@@ -34,7 +34,7 @@ def generate_story():
     story_obj.title = llm_content_processor.get_story_title(story_content)
     story_obj.save_as_json() # just to be safe
     generate_images_for_next_two_pages(story_obj)
-    generate_voiceover_for_next_two_pages(story_obj, "Rachel") 
+    generate_voiceover_for_next_two_pages(story_obj) 
     return jsonify({'story': "\n\n".join(story_obj.parts)})
 
 @app.route("/get_story", methods=["GET"])
