@@ -15,7 +15,7 @@ def generate_images_for_next_two_pages(story: Story):
     with ThreadPoolExecutor() as executor:
         for i in range(curr_page + 1, curr_page + 3):
             if i >= story.pages: return
-            if i in story.illustration_links and story.illustration_links[i]: continue
+            if i in story.illustration_links and story.illustration_links[i] != "": continue
             
             def process_page(page_index):
                 img_prompt = llm_service.generate_img_prompt(story.parts[page_index])
