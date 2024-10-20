@@ -1,4 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import os
 from model.Story import Story
 from img_service.StabilityService import StabilityService
 from llm_service.LLMServiceViaPortKey import LLMServiceViaPortKey
@@ -15,7 +16,7 @@ def generate_images_for_next_two_pages(story: Story):
     with ThreadPoolExecutor() as executor:
         for i in range(curr_page + 1, curr_page + 3):
             if i >= story.pages: return
-            if i in story.illustration_links and story.illustration_links[i]: continue
+            if i in story.illustration_links and story.illustration_links[i] != "": continue
             
             def process_page(page_index):
                 img_prompt = llm_service.generate_img_prompt(story.parts[page_index])
@@ -37,10 +38,7 @@ def generate_voiceover_for_next_two_pages(story: Story, narrator: str = "Rachel"
     curr_page = story.cursor
     input_arr = []
     index_map = []   
-    voice_map = {"skyler":"5HuFhTDIKwL0cGenPHbW",
-                 "thor":"INHnGXKnJqauobZLfeOV",
-                 "olive":"SgTNj9yF9IHj6KwO6pZf",
-                 "remy":"0m2tDjDewtOfXrhxqgrJ"}
+    voice_map = tts_service.voice_map
     
     if(story.voice_charcater in voice_map):
         narrator = voice_map[story.voice_charcater]
@@ -64,3 +62,9 @@ def generate_voiceover_for_next_two_pages(story: Story, narrator: str = "Rachel"
             story.voice_links[index_map[idx]] = audio_path
         
         story.save_as_json()
+        
+def clone_user_voice(sample_path: str):
+    voice_cloning_service = VoiceCloningService()
+    tts_service = TTSService()
+    cloned_voice = voice_cloning_service.clone_voice("parent", "User Voice", [sample_path])
+    tts_service.add_voice("parent", cloned_voice.voice_id)

@@ -29,7 +29,23 @@ class TTSService:
         # self.output_dir = os.path.join(os.path.dirname(__file__), "voice_output")
         self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) # server dir
         self.output_dir = os.path.join(self.base_dir, "static", "voice_output") 
+        self.voice_map = {
+            "skyler": "5HuFhTDIKwL0cGenPHbW",
+            "thor": "INHnGXKnJqauobZLfeOV",
+            "olive": "SgTNj9yF9IHj6KwO6pZf",
+            "remy": "0m2tDjDewtOfXrhxqgrJ"
+        }
 
+    def add_voice(self, name: str, voice_id: str):
+        """
+        Adds a new voice to the voice map.
+        
+        Args:
+            name (str): The name of the new voice.
+            voice_id (str): The corresponding voice ID.
+        """
+        self.voice_map[name.lower()] = voice_id
+        
     def text_to_speech_stream_raw(self, text: str) -> IO[bytes]:
         """
         Converts text to speech and returns the audio data as a byte stream.

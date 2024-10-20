@@ -1,8 +1,9 @@
+import os
 from flask import Flask, jsonify, request, abort
 from model.Conversation import Conversation
 from model.Story import Story
 from llm_service.LLMServiceViaPortKey import LLMServiceViaPortKey
-from util import generate_images_for_next_two_pages,generate_voiceover_for_next_two_pages
+from util import generate_images_for_next_two_pages,generate_voiceover_for_next_two_pages,clone_user_voice
 
 # from flask_cors import CORS
 app = Flask(__name__)
@@ -43,31 +44,22 @@ def get_story():
     _check_story_created()
     return jsonify(_get_story_object().to_dict())
 
-@app.route('/upload-audio', methods=['POST'])
+@app.route('/upload-parent', methods=['POST'])
 def upload_audio():
     if 'audio' not in request.files:
-        return 'No audio file part', 400
+        return jsonify({'status': 'error', 'message': 'No file part'}), 400
 
     file = request.files['audio']
     
     if file.filename == '':
-        return 'No selected file', 400
+        jsonify({'status': 'error', 'message': 'File upload failed'}), 400
 
     if file:
         filename = file.filename
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return 'Audio uploaded successfully', 200
-
-@app.route("/clone_voice", methods=["POST"])
-def clone_voice():
-    user_input = request.get_json()
-    voice_character = user_input["voiceCharacter"]
-    voice_character_path = user_input["voiceCharacterPath"]
-    _check_story_created()
-    _get_story_object().set_voice_character(voice_character, voice_character_path)
-    _get_story_object().save_as_json()
-    generate_voiceover_for_next_two_pages(_get_story_object(), voice_character)
-    return jsonify({'status': 'success'})
+        sample_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"voiceover_service", "voice_samples", "parent.wav")
+        file.save(sample_path)
+        clone_user_voice(sample_path)
+        return 'Audio cloned successfully', 200
 
 @app.route("/interact", methods=["POST"])
 def interact_with_ai():
@@ -100,6 +92,21 @@ def previous_page():
     response = _get_story_object().previous_page()
     generate_images_for_next_two_pages(_get_story_object())
     return {'story': response}
+
+@app.route("/recreate_story", methods=["POST"])
+def recreate_story():
+    _check_story_created()
+    children_reponse = request.get_json()['childrenReponse']
+    llm_content_processor = LLMServiceViaPortKey()
+    new_story_prompt = llm_content_processor.get_new_guideline(children_reponse)
+    if new_story_prompt == "None":
+        return jsonify({'status': 'skip'})
+    story = _get_story_object()
+    new_story_content = ''.join(chunk for chunk in llm_content_processor.recreate_story('\n'.join(story.parts[:3]), new_story_prompt, story.pages-3) if chunk is not None)
+    story.recreate_story(new_story_content)
+    story.save_as_json()
+    generate_images_for_next_two_pages(story)
+    return jsonify({'status': 'success'})
 
 def _check_story_created():
     if app.config['uuid'] is None or not Story.check_file_exists(app.config['uuid']):
