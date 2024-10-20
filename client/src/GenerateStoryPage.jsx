@@ -7,7 +7,7 @@ import Confetti from 'react-confetti'
 const GenerateStoryPage = () => {
 
   const navigate = useNavigate(); 
-  const {name, age, readTime, hobbies, elements, mood} = useOutletContext()
+  const {name, age, readTime, hobbies, elements, mood, voiceCharacter, voiceCharacterPath} = useOutletContext()
   // const { width, height } = useWindowSize()
 
 
@@ -23,7 +23,7 @@ const GenerateStoryPage = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ age, readTime, elements, mood, hobbies }) 
+      body: JSON.stringify({ age, readTime, elements, mood, hobbies, voiceCharacter, voiceCharacterPath }) 
     })
       .then(res => res.json())
       .then(data => {

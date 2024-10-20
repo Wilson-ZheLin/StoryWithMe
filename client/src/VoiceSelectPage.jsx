@@ -5,12 +5,13 @@ import { useOutletContext, useNavigate } from 'react-router-dom'
 const VoiceSelectPage = () => {
 
     const navigate = useNavigate();
-    const {voice, setVoice} = useOutletContext();
+    const {voiceCharacter, setVoiceCharacter, voiceCharacterPath, setVoiceCharacterPath} = useOutletContext();
     const [selectedVoice, setSelectedVoice] = useState(null);
 
     const handleVoice = (e) => {
-        setVoice(e.target.alt);
+        setVoiceCharacter(e.target.alt);
         setSelectedVoice(e.target.alt);
+        setVoiceCharacterPath(e.target.src);
     }
 
     const handleClick = () =>{
@@ -18,8 +19,9 @@ const VoiceSelectPage = () => {
     }
 
     useEffect(() => {
-        console.log(voice);
-    }, [voice]);
+        console.log(voiceCharacter);
+        console.log(voiceCharacterPath);
+    }, [voiceCharacter]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-6">
