@@ -40,8 +40,15 @@ const SelectElementsPage = () => {
             <div key={index} className="flex items-center">
                 <img src={`/${image.src}`}
                     alt={getImageName(image.src)}
-                    className="w-36 h-36 object-cover hover:bg-base-200 cursor-pointer"
-                    onClick={(e) => addElement(e.target.alt)}
+                    className={`w-36 h-36 object-cover hover:bg-base-200 cursor-pointer ${elements.includes(getImageName(image.src)) ? 'bg-base-200' : ''}`}
+                    onClick={(e) => {
+                        const newElement = getImageName(e.target.src);
+                        if (elements.includes(newElement)) {
+                            setElements(elements.filter(element => element !== newElement));
+                        } else {
+                            setElements([...elements, newElement]);
+                        }
+                    }}
                     />
             </div>
         ))}
