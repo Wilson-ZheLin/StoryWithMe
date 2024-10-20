@@ -45,14 +45,29 @@ def get_story():
 
 @app.route("/clone_voice", methods=["POST"])
 def clone_voice():
-    user_input = request.get_json()
-    voice_character = user_input["voiceCharacter"]
-    voice_character_path = user_input["voiceCharacterPath"]
-    _check_story_created()
-    _get_story_object().set_voice_character(voice_character, voice_character_path)
-    _get_story_object().save_as_json()
-    generate_voiceover_for_next_two_pages(_get_story_object(), voice_character)
-    return jsonify({'status': 'success'})
+    # Get the uploaded file from the request
+    if 'file' not in request.files:
+        return jsonify({'status': 'error', 'message': 'No file part'}), 400
+    
+    file = request.files['file']
+    voice_character = request.form.get('voiceCharacter')  # Get additional form data
+    voice_character_path = request.form.get('voiceCharacterPath')
+
+    # Save the file locally (or process it directly)
+    if file:
+        file_path = os.path.join('/path/to/save', 'uploaded_voice_sample.wav')
+        file.save(file_path)
+
+        # Assuming your story object is already set with the voice character
+        _check_story_created()
+        _get_story_object().set_voice_character(voice_character, voice_character_path)
+        _get_story_object().save_as_json()
+
+        # Pass the file path to your function
+        clone_voice(file_path, voice_character_path)
+        return jsonify({'status': 'success'})
+    else:
+        return jsonify({'status': 'error', 'message': 'File upload failed'}), 400
 
 @app.route("/interact", methods=["POST"])
 def interact_with_ai():
