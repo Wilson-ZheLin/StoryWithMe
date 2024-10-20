@@ -135,13 +135,13 @@ const StoryDetailPage = () => {
                 <div className="chat-header">
                   {story.voice_charcater["voice_character"]}
                 </div>
-                <div className="chat-bubble">Prompt a question based on the current story progress.</div>
+                <div className="chat-bubble">{story.question}</div>
               </div>
 
               {/* kid's response */}
               <div className="chat chat-end">
                 <button className="btn btn-circle">
-                  <img src="/speak.svg" alt="speakIcon" />
+                  <img src="/mic.svg" alt="speakIcon" />
                 </button>
               </div>
             </div>

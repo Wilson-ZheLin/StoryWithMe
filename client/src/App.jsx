@@ -21,7 +21,7 @@ const App = () => {
     elements, setElements,
     mood, setMood,
     voiceCharacter, setVoiceCharacter,
-    voiceCharacterPath, setVoiceCharacterPath
+    voiceCharacterPath, setVoiceCharacterPath,
   };
 
   return (
