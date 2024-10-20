@@ -118,6 +118,7 @@ def current_page():
 def next_page():
     _check_story_created()
     response = _get_story_object().next_page()
+    generate_voiceover_for_next_two_pages(_get_story_object())
     generate_images_for_next_two_pages(_get_story_object())
     return {'story': response}
 
@@ -125,6 +126,7 @@ def next_page():
 def previous_page():
     _check_story_created()
     response = _get_story_object().previous_page()
+    generate_voiceover_for_next_two_pages(_get_story_object())
     generate_images_for_next_two_pages(_get_story_object())
     return {'story': response}
 
@@ -140,6 +142,7 @@ def recreate_story():
     new_story_content = ''.join(chunk for chunk in llm_content_processor.recreate_story('\n'.join(story.parts[:3]), new_story_prompt, story.pages-3) if chunk is not None)
     story.recreate_story(new_story_content)
     story.save_as_json()
+    generate_voiceover_for_next_two_pages(story)
     generate_images_for_next_two_pages(story)
     return jsonify({'status': 'success'})
 
