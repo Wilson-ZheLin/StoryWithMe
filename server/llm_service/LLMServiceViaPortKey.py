@@ -33,9 +33,9 @@ class LLMServiceViaPortKey:
         for chunk in chat_complete:
             yield chunk.choices[0].delta.content
 
-    def recreate_story(self, story_so_far: str, read_time: int, new_elements: list[str]):
+    def recreate_story(self, story_so_far: str, guidelines: str, section_count: int):
         prompt_system = PromptTemplate(input_variables=["story_so_far"], template=self.config["story_recreation_system"]).format(story_so_far=story_so_far)
-        prompt_user = PromptTemplate(input_variables=["read_time", "new_elements"], template=self.config["story_recreation_user"]).format(read_time=read_time, new_elements=', '.join(new_elements))
+        prompt_user = PromptTemplate(input_variables=["guidelines", "section_count"], template=self.config["story_recreation_user"]).format(guidelines=guidelines, section_count=section_count)
         chat_complete = self.client.chat.completions.create(
             model=self.model_name,
             messages=[
@@ -75,6 +75,14 @@ class LLMServiceViaPortKey:
     
     def get_interaction_prompt(self, story_so_far: str):
         prompt_user = PromptTemplate(input_variables=["story_so_far"], template=self.config["interaction_prompt_template"]).format(story_so_far=story_so_far)
+        chat_complete = self.client.chat.completions.create(
+            model=self.model_name,
+            messages=[{"role": "user", "content": prompt_user}],
+        )
+        return chat_complete.choices[0].message.content
+    
+    def get_new_guideline(self, children_reponse: str):
+        prompt_user = PromptTemplate(input_variables=["children_reponse"], template=self.config["get_new_guideline_template"]).format(children_reponse=children_reponse)
         chat_complete = self.client.chat.completions.create(
             model=self.model_name,
             messages=[{"role": "user", "content": prompt_user}],
