@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const VoiceRecorder = () => {
+const KidResponseRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState('');
   const mediaRecorderRef = useRef(null);
@@ -41,12 +41,12 @@ const VoiceRecorder = () => {
   };
 
   // Function to upload audio to the server
-  const uploadAudio = (audioBlob) => {
+  const uploadAudio = (audioBlob, audioName) => {
     const formData = new FormData();
-    const audioFile = new File([audioBlob], 'parent_recording.wav', { type: 'audio/wav' });
+    const audioFile = new File([audioBlob], "kid_recording.wav", { type: 'audio/wav' });
     formData.append('audio', audioFile);
 
-    fetch('/upload-audio', {
+    fetch('/upload-kid', {
       method: 'POST',
       body: formData,
     })
@@ -60,20 +60,23 @@ const VoiceRecorder = () => {
       .catch(err => console.error('Error uploading audio:', err));
   };
 
-  return (
-    <div className='flex flex-col items-center justify-center gap-6'>
-      <button className='btn btn-secondary' onClick={handleRecord}>
-        {isRecording ? 'Stop Recording' : 'Start Recording'}
-      </button>
-
-      {audioURL && (
-        <div className='flex flex-col items-center justify-center gap-2'>
-          <h2>Recorded Audio: </h2>
-          <audio controls src={audioURL}></audio>
-        </div>
-      )}
-    </div>
-  );
+    return (
+            <div className='flex items-center justify-center gap-2'>
+              <button className='btn btn-secondary btn-circle' onClick={handleRecord}>
+                {isRecording ? (
+                    <img src="/stop.png" alt="speakIcon" />
+                ) : (
+                  <img src="/record.png" alt="recordIcon" />
+                )}
+              </button>
+              {audioURL && (
+                <div className='flex flex-col items-center justify-center gap-2'>
+                  <h2>Recorded Audio: </h2>
+                  <audio controls src={audioURL}></audio>
+                </div>
+              )}
+            </div>
+          );
 };
 
-export default VoiceRecorder;
+export default KidResponseRecorder;

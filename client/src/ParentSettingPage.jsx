@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useOutletContext, useNavigate } from 'react-router-dom'
-import VoiceRecorder from './VoiceRecorder';
+import ParentVoiceRecorder from './ParentVoiceRecorder';
 
 
 const ParentSettingPage = () => {
@@ -76,7 +76,7 @@ const ParentSettingPage = () => {
             <div className='flex flex-col items-center justify-center gap-4 px-52'>
                 <p>Once upon a time, a little bird named Pip lived in a cozy nest high up in a big oak tree. One sunny morning, Pip wanted to learn how to fly. “Flap your wings!” his friends chirped. So Pip flapped and flapped, but he was too scared to jump. Then, his best friend, a squirrel named Nutty, said, “I’ll be right here to catch you if you fall!” Pip took a deep breath, flapped his wings, and leaped from the branch. To his surprise, he soared through the sky! Pip flew in circles, happy and proud, knowing his friends would always be there to cheer him on. And from that day on, Pip never stopped flying!</p>
                 <div className='flex gap-6'>
-                    <VoiceRecorder />
+                    <ParentVoiceRecorder />
                 </div>
             </div>
             <button

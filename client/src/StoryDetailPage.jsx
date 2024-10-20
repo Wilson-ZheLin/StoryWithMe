@@ -2,6 +2,8 @@ import React, { useEffect, useState} from 'react'
 import {ReactComponent as Logo} from './logo.svg'
 import ProgressBar from './ProgressBar';
 import { useNavigate, useParams } from 'react-router-dom'
+import KidResponseRecorder from './KidResponseRecorder';
+
 
 
 const StoryDetailPage = () => {
@@ -14,6 +16,7 @@ const StoryDetailPage = () => {
   const [error, setError] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
   const [audio, setAudio] = useState(null);
+  const [showVoiceRecorder, setShowVoiceRecorder] = useState(false);
 
   const getStory = () => {    
     setLoading(true);
@@ -90,6 +93,7 @@ const StoryDetailPage = () => {
     }
   };
 
+
   return (
     <>
     {loading && <span className="loading loading-dots loading-sm"></span>}
@@ -146,9 +150,10 @@ const StoryDetailPage = () => {
 
               {/* kid's response */}
               <div className="chat chat-end">
-                <button className="btn btn-circle">
+                {/* <button className="btn btn-circle" onClick={() => setShowVoiceRecorder(true)}>
                   <img src="/mic.svg" alt="speakIcon" />
-                </button>
+                </button> */}
+                <KidResponseRecorder />
               </div>
             </div>
 
