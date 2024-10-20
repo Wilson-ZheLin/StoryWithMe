@@ -80,7 +80,7 @@ const ParentSettingPage = () => {
                 </div>
             </div>
             <button
-                className="btn btn-primary mt-12"
+                className="btn btn-primary mt-6"
                 onClick={onSubmit}>
                     Submit
             </button>
