@@ -29,3 +29,7 @@ image_prompt_template: |
 story_title_template: |
   This is a complete story for children: {story}
   Give a very conscise title for the story based on the content. Respond only with the title, avoiding extra explanations or context.
+interaction_prompt_template: |
+  You're a engaging and entertaining storyteller and you are collaborating with the children to continue creating the story. The content of the story so far is:
+  {story_so_far}
+  Ask the children a very conscise and inspiring question based on the existing content, guiding them to continue creating the story collaboratively. Respond only with the question, avoiding extra explanations or context.

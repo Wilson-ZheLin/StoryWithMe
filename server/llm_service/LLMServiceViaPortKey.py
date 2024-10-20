@@ -72,6 +72,14 @@ class LLMServiceViaPortKey:
             messages=[{"role": "user", "content": prompt_user}],
         )
         return chat_complete.choices[0].message.content
+    
+    def get_interaction_prompt(self, story_so_far: str):
+        prompt_user = PromptTemplate(input_variables=["story_so_far"], template=self.config["interaction_prompt_template"]).format(story_so_far=story_so_far)
+        chat_complete = self.client.chat.completions.create(
+            model=self.model_name,
+            messages=[{"role": "user", "content": prompt_user}],
+        )
+        return chat_complete.choices[0].message.content
 
 if __name__ == '__main__':
     llm_content_processor = LLMServiceViaPortKey()
