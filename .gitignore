@@ -166,4 +166,5 @@ cython_debug/
 
 *.mp3
 *.m4a
+*.wav
 server/voiceover_service/sessions.json
