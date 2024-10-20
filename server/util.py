@@ -19,7 +19,7 @@ def generate_images_for_next_two_pages(story: Story):
             if i in story.illustration_links and story.illustration_links[i] != "": continue
             
             def process_page(page_index):
-                img_prompt = llm_service.generate_img_prompt(story.parts[page_index])
+                img_prompt = llm_service.generate_img_prompt(story_chunk=story.parts[page_index], story=story.content)
                 img_service.generate_image(img_prompt, story.uuid + "_" + str(page_index))
                 story.illustration_links[page_index] = story.uuid + "_" + str(page_index) + ".webp"
 
