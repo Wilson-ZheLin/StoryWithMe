@@ -40,7 +40,7 @@ def generate_voiceover_for_next_two_pages(story: Story, narrator: str = "Rachel"
     index_map = []   
     voice_map = tts_service.voice_map
     
-    if(story.voice_charcater in voice_map):
+    if(story.voice_charcater["voice_character"] in voice_map):
         narrator = voice_map[story.voice_charcater]
     
     for i in range(curr_page + 1, curr_page + 3):
