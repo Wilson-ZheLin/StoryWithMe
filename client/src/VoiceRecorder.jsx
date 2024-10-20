@@ -61,15 +61,14 @@ const VoiceRecorder = () => {
   };
 
   return (
-    <div>
-      <h1>Voice Recorder</h1>
-      <button onClick={handleRecord}>
+    <div className='flex flex-col items-center justify-center gap-6'>
+      <button className='btn btn-secondary' onClick={handleRecord}>
         {isRecording ? 'Stop Recording' : 'Start Recording'}
       </button>
 
       {audioURL && (
-        <div>
-          <h2>Recorded Audio:</h2>
+        <div className='flex flex-col items-center justify-center gap-2'>
+          <h2>Recorded Audio: </h2>
           <audio controls src={audioURL}></audio>
         </div>
       )}

@@ -93,6 +93,21 @@ def previous_page():
     generate_images_for_next_two_pages(_get_story_object())
     return {'story': response}
 
+@app.route("/recreate_story", methods=["POST"])
+def recreate_story():
+    _check_story_created()
+    children_reponse = request.get_json()['childrenReponse']
+    llm_content_processor = LLMServiceViaPortKey()
+    new_story_prompt = llm_content_processor.get_new_guideline(children_reponse)
+    if new_story_prompt == "None":
+        return jsonify({'status': 'skip'})
+    story = _get_story_object()
+    new_story_content = ''.join(chunk for chunk in llm_content_processor.recreate_story('\n'.join(story.parts[:3]), new_story_prompt, story.pages-3) if chunk is not None)
+    story.recreate_story(new_story_content)
+    story.save_as_json()
+    generate_images_for_next_two_pages(story)
+    return jsonify({'status': 'success'})
+
 def _check_story_created():
     if app.config['uuid'] is None or not Story.check_file_exists(app.config['uuid']):
         abort(404, description="No story generated yet")

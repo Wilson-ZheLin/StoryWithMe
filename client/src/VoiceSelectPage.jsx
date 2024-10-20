@@ -7,12 +7,25 @@ const VoiceSelectPage = () => {
     const navigate = useNavigate();
     const {voiceCharacter, setVoiceCharacter, voiceCharacterPath, setVoiceCharacterPath} = useOutletContext();
     const [selectedVoice, setSelectedVoice] = useState(null);
+    const [audio, setAudio] = useState(null);
 
     const handleVoice = (e) => {
         setVoiceCharacter(e.target.alt);
         setSelectedVoice(e.target.alt);
         setVoiceCharacterPath(e.target.src);
+        // audio event handler
+        if (audio){
+          audio.pause()
+        }
+        const audioFile = `/${e.target.alt}_Intro.mp3`; 
+        setAudio(new Audio(audioFile));
     }
+
+    useEffect(() => {
+      if (audio) {
+        audio.play();
+      }
+    }, [audio]);
 
     const handleClick = () =>{
         navigate("/story");
@@ -29,25 +42,25 @@ const VoiceSelectPage = () => {
       <div className="flex gap-3">
         <img
           src="/skyler.svg"
-          alt="skyler"
+          alt="Skyler"
           className={`w-36 cursor-pointer hover:bg-base-200 ${selectedVoice === 'skyler' ? 'bg-base-200' : ''}`}
           onClick={handleVoice}
         />
         <img
           src="/thor.svg"
-          alt="thor"
+          alt="Thor"
           className={`w-36 cursor-pointer hover:bg-base-200 ${selectedVoice === 'thor' ? 'bg-base-200' : ''}`}
           onClick={handleVoice}
         />
         <img
           src="/olive.svg"
-          alt="olive"
+          alt="Olive"
           className={`w-36 cursor-pointer hover:bg-base-200 ${selectedVoice === 'olive' ? 'bg-base-200' : ''}`}
           onClick={handleVoice}
         />
         <img
           src="/remy.svg"
-          alt="remy"
+          alt="Remy"
           className={`w-36 cursor-pointer hover:bg-base-200 ${selectedVoice === 'remy' ? 'bg-base-200' : ''}`}
           onClick={handleVoice}
         />

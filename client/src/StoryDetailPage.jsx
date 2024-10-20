@@ -13,7 +13,7 @@ const StoryDetailPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
-
+  const [audio, setAudio] = useState(null);
 
   const getStory = () => {    
     setLoading(true);
@@ -57,12 +57,16 @@ const StoryDetailPage = () => {
 
   const playAudio = () =>{
     if (audioUrl) {
-      const audio = new Audio(audioUrl);
-      audio.play();
+      const audioObj = new Audio(audioUrl);
+      setAudio(audioObj);
+      audioObj.play();
     }
   }
 
   const handleNextPage = () => {
+    if (audio) {
+      audio.pause();
+    }
     const nextPageId = currentPage + 1;;
     if (nextPageId > story.pages) {
       navigate('/story_gallery');
@@ -70,11 +74,13 @@ const StoryDetailPage = () => {
       setCurrentPage(nextPageId);
       navigate(`/story/${nextPageId}`);
       getNextTwoIllustrations();
-
     }
   };
 
   const handlePreviousPage = () => {
+    if (audio) {
+      audio.pause();
+    }
     const prevPageId = currentPage - 1
     if (prevPageId < 1) {
       return;
