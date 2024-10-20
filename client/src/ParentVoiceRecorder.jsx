@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useOutletContext } from 'react-router-dom';
 
 const ParentVoiceRecorder = () => {
+
+  const {parentVoice, setParentVoice} = useOutletContext()
+
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState('');
   const mediaRecorderRef = useRef(null);
@@ -41,7 +45,7 @@ const ParentVoiceRecorder = () => {
   };
 
   // Function to upload audio to the server
-  const uploadAudio = (audioBlob, audioName) => {
+  const uploadAudio = (audioBlob) => {
     const formData = new FormData();
     const audioFile = new File([audioBlob], "parent_recording.wav", { type: 'audio/wav' });
     formData.append('audio', audioFile);
@@ -53,6 +57,7 @@ const ParentVoiceRecorder = () => {
       .then(response => {
         if (response.ok) {
           console.log('Audio uploaded successfully');
+          setParentVoice(true)
         } else {
           console.error('Failed to upload audio');
         }
