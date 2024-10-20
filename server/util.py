@@ -15,7 +15,7 @@ def generate_images_for_next_two_pages(story: Story):
     # Concurrently generate images for next two pages
     with ThreadPoolExecutor() as executor:
         for i in range(curr_page + 1, curr_page + 3):
-            if i >= story.pages: return
+            if i >= story.pages: break
             if i in story.illustration_links and story.illustration_links[i] != "": continue
             
             def process_page(page_index):
