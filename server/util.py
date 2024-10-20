@@ -46,13 +46,14 @@ def generate_voiceover_for_next_two_pages(story: Story, narrator: str = "Rachel"
         if story.parts[i]:  
             input_arr.append(story.parts[i])
             index_map.append(i)  
+            
+    if(input_arr):
+        audio_paths = tts_service.text_to_speech_save(
+            session_texts=input_arr,
+            voice=narrator
+        )
     
-    audio_paths = tts_service.text_to_speech_save(
-        session_texts=input_arr,
-        voice=narrator
-    )
-    
-    for idx, audio_path in enumerate(audio_paths):
-        story.voice_links[index_map[idx]] = audio_path
+        for idx, audio_path in enumerate(audio_paths):
+            story.voice_links[index_map[idx]] = audio_path
         
-    story.save_as_json()
+        story.save_as_json()

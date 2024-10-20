@@ -25,7 +25,7 @@ const StoryDetailPage = () => {
     }).then(res => res.json())
     .then(story => {
       setStory(story);
-      // setAudioUrl(`http://127.0.0.1:5000/${story.voice_links[parseInt(currentPage, 10) - 1]}`);
+      setAudioUrl(`http://127.0.0.1:5000/${story.voice_links[parseInt(currentPage, 10) - 1]}`);
       console.log(story);
       setLoading(false);
     })
@@ -51,16 +51,16 @@ const StoryDetailPage = () => {
     })
   }
 
-  // useEffect(() => {
-  //   playAudio();
-  // }, [story])
+  useEffect(() => {
+    playAudio();
+  }, [story])
 
-  // const playAudio = () =>{
-  //   if (audioUrl) {
-  //     const audio = new Audio(audioUrl);
-  //     audio.play();
-  //   }
-  // }
+  const playAudio = () =>{
+    if (audioUrl) {
+      const audio = new Audio(audioUrl);
+      audio.play();
+    }
+  }
 
   const handleNextPage = () => {
     const nextPageId = currentPage + 1;;
