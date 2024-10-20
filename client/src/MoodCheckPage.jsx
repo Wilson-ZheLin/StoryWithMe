@@ -7,9 +7,13 @@ const MoodCheckPage = () => {
   const { mood, setMood } = useOutletContext();
   const [selectedMood, setSelectedMood] = useState(null);
 
+  const clickSound = new Audio("/click.wav");
+
+
   const handleMood = (event) => {
     setMood(event.target.alt);
     setSelectedMood(event.target.alt);
+    clickSound.play();
   };
 
   const handleClick = () => {

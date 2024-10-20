@@ -3,6 +3,9 @@ import { useOutletContext, useNavigate } from 'react-router-dom'
 
 const SelectElementsPage = () => {
 
+  const clickSound = new Audio("/click.wav");
+
+
   const navigate = useNavigate();
   const {elements, setElements} = useOutletContext();
   const [images, setImages] = useState([]);
@@ -43,6 +46,8 @@ const SelectElementsPage = () => {
                     className={`w-36 h-36 object-cover hover:bg-base-200 cursor-pointer ${elements.includes(getImageName(image.src)) ? 'bg-base-200' : ''}`}
                     onClick={(e) => {
                         const newElement = getImageName(e.target.src);
+                        clickSound.play();
+
                         if (elements.includes(newElement)) {
                             setElements(elements.filter(element => element !== newElement));
                         } else {
