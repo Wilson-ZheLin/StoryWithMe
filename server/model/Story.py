@@ -10,7 +10,7 @@ class Story:
         self.parts = [part.strip() for part in self.content.split("||") if part.strip()]
         self.pages = len(self.parts)
         self.illustration_links = {i: "t" + str(i) + ".webp" for i in range(self.pages)}
-        self.voice_links = {i: "static/voice_output/audio_{}.mp3".format(i) for i in range(self.pages)}
+        self.voice_links = {i: "static/voice_output/session_001/audio_{}.mp3".format(i) for i in range(self.pages)}
         self.cursor = -1
         self.title = ""
         self.voice_charcater = dict()

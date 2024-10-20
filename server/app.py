@@ -42,6 +42,17 @@ def get_story():
     _check_story_created()
     return jsonify(_get_story_object().to_dict())
 
+@app.route("/clone_voice", methods=["POST"])
+def clone_voice():
+    user_input = request.get_json()
+    voice_character = user_input["voiceCharacter"]
+    voice_character_path = user_input["voiceCharacterPath"]
+    _check_story_created()
+    _get_story_object().set_voice_character(voice_character, voice_character_path)
+    _get_story_object().save_as_json()
+    generate_voiceover_for_next_two_pages(_get_story_object(), voice_character)
+    return jsonify({'status': 'success'})
+
 @app.route("/interact", methods=["POST"])
 def interact_with_ai():
     _check_story_created() # Ensure the story is created
