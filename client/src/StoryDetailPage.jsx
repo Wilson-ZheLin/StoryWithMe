@@ -131,31 +131,32 @@ const StoryDetailPage = () => {
             </div>
             
             {/* interaction window */}
-            <div className="flex justify-between" >
-              {/* voic character */}
-              <div className="chat chat-start">
-                <div className="chat-image avatar">
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="Tailwind CSS chat bubble component"
-                      src={story.voice_charcater["voice_character_path"]}
-                    />
+            {currentPage === 3 && 
+              <div className="flex justify-between" >
+                {/* voic character */}
+                <div className="chat chat-start">
+                  <div className="chat-image avatar">
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Tailwind CSS chat bubble component"
+                        src={story.voice_charcater["voice_character_path"]}
+                      />
+                    </div>
                   </div>
+                  <div className="chat-header">
+                    {story.voice_charcater["voice_character"]}
+                  </div>
+                  <div className="chat-bubble">{story.question}</div>
                 </div>
-                <div className="chat-header">
-                  {story.voice_charcater["voice_character"]}
-                </div>
-                <div className="chat-bubble">{story.question}</div>
-              </div>
 
-              {/* kid's response */}
-              <div className="chat chat-end">
-                {/* <button className="btn btn-circle" onClick={() => setShowVoiceRecorder(true)}>
-                  <img src="/mic.svg" alt="speakIcon" />
-                </button> */}
-                <KidResponseRecorder />
+                {/* kid's response */}
+                <div className="chat chat-end">
+                  <KidResponseRecorder />
+                </div>
               </div>
-            </div>
+            
+            }
+
 
           </div>
         </div>
