@@ -8,7 +8,6 @@ const GenerateStoryPage = () => {
 
   const navigate = useNavigate(); 
   const {name, age, readTime, hobbies, elements, mood, voiceCharacter, voiceCharacterPath} = useOutletContext()
-  // const { width, height } = useWindowSize()
 
 
   const [data, setData] = useState({})

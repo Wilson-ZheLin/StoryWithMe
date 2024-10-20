@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useOutletContext, useNavigate } from 'react-router-dom'
+import VoiceRecorder from './VoiceRecorder';
 
 
 const ParentSettingPage = () => {
@@ -72,14 +73,14 @@ const ParentSettingPage = () => {
                     value={hobbies[2]}
                     onChange={(e) => handleHobbies(2, e.target.value)} />
             </div>
-            <div className='flex flex-col items-center justify-center gap-4'>
-                <label className=''>Would you like to record your voice? If so, please click the microphone</label>
-                {/* TODO: enable voice sample recording */}
-                <img src="/mic.svg" alt="mic" className="w-12 rounded-full bg-secondary hover:cursor-pointer" />
-                <p>Sample Recording text</p>
+            <div className='flex flex-col items-center justify-center gap-4 px-52'>
+                <p>Once upon a time, a little bird named Pip lived in a cozy nest high up in a big oak tree. One sunny morning, Pip wanted to learn how to fly. “Flap your wings!” his friends chirped. So Pip flapped and flapped, but he was too scared to jump. Then, his best friend, a squirrel named Nutty, said, “I’ll be right here to catch you if you fall!” Pip took a deep breath, flapped his wings, and leaped from the branch. To his surprise, he soared through the sky! Pip flew in circles, happy and proud, knowing his friends would always be there to cheer him on. And from that day on, Pip never stopped flying!</p>
+                <div className='flex gap-6'>
+                    <VoiceRecorder />
+                </div>
             </div>
             <button
-                className="btn btn-primary"
+                className="btn btn-primary mt-12"
                 onClick={onSubmit}>
                     Submit
             </button>

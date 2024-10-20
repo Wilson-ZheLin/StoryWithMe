@@ -43,6 +43,21 @@ def get_story():
     _check_story_created()
     return jsonify(_get_story_object().to_dict())
 
+@app.route('/upload-audio', methods=['POST'])
+def upload_audio():
+    if 'audio' not in request.files:
+        return 'No audio file part', 400
+
+    file = request.files['audio']
+    
+    if file.filename == '':
+        return 'No selected file', 400
+
+    if file:
+        filename = file.filename
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return 'Audio uploaded successfully', 200
+
 @app.route("/clone_voice", methods=["POST"])
 def clone_voice():
     # Get the uploaded file from the request
