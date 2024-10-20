@@ -32,7 +32,7 @@ class TTSService:
         self.voice_map = {
             "skyler": "5HuFhTDIKwL0cGenPHbW",
             "thor": "INHnGXKnJqauobZLfeOV",
-            "olive": "H18Wa5S3HLzpEqeSyr76",
+            "olive": "rrMMAo6MoUPTPv1w4jHj",
             "remy": "0m2tDjDewtOfXrhxqgrJ"
         }
 
