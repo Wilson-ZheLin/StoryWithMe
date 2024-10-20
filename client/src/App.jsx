@@ -9,7 +9,9 @@ const App = () => {
   const [hobbies, setHobbies] = useState([]);
   const [elements, setElements] = useState([]);
   const [mood, setMood] = useState('');
-  const [voice, setVoice] = useState('');
+  const [voiceCharacter, setVoiceCharacter] = useState('');
+  const [voiceCharacterPath, setVoiceCharacterPath] = useState('');
+
 
   const stateProps = {
     name, setName,
@@ -18,7 +20,8 @@ const App = () => {
     hobbies, setHobbies,
     elements, setElements,
     mood, setMood,
-    voice, setVoice
+    voiceCharacter, setVoiceCharacter,
+    voiceCharacterPath, setVoiceCharacterPath
   };
 
   return (
@@ -33,7 +36,7 @@ const App = () => {
         <p>Hobbies: {hobbies}</p>
         <p>Elements: {elements}</p>
         <p>Mood: {mood}</p>
-        <p>Voice: {voice}</p>
+        <p>Voice: {voiceCharacter}</p>
 
       </div>
 
