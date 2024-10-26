@@ -1,2 +1,2 @@
-stability_key: "sk-WQSwFmIA8iSRLYYognsXYnfUT7tMfFrt2IkUXppAFKYz4oLa" # Be very careful with the API key
+stability_key: "ENTER YOUR STABILITY AI API KEY HERE"
 generation_host: "https://api.stability.ai/v2beta/stable-image/generate/core"

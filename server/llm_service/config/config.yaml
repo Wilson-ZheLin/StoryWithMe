@@ -1,5 +1,5 @@
-openai_api_key: "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" # Be very careful with the API key
-portkey_api_key: "hblS2iGGxs42CXo1PUL2Q0/ZfbrT"
+openai_api_key: "ENTER YOUR OPENAI API KEY HERE"
+portkey_api_key: "ENTER YOUR PORTKEY API KEY HERE"
 model_name: "gpt-4o-mini"
 story_template: |
   You are a creative and entertaining storyteller, crafting a story for children aged {age}.
