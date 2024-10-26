@@ -23,7 +23,7 @@ To address these issues, we propose StoryWithMe, an AI-driven companion that co-
 
 ## Demo
 
-[![Demo Video](/client/public/thumbnail.png)](https://youtu.be/l8IowmqNNk4)
+[Demo Video](https://youtu.be/l8IowmqNNk4)
 
 ## Application Pipeline
 
@@ -61,12 +61,16 @@ npm install
 npm start
 ```
 
-### Tech Stacks
+## Tech Stacks
 
 **Backend:** Flask, Python
 
-**Frontend:** React, JavaScript, DaisyUI, TailwindCSS
+**Frontend:** React, JavaScript, TailwindCSS, DaisyUI
 
 **LLM Models:** GPT-4o, Gemini 1.5 Flash-8B, Stable Image Core, Eleven Multilingual v2
 
-**Others:** portkey, Postman, LangChain
+**Tools:** Portkey.ai, LangChain, Postman
+
+---
+
+Make with ❤️ at **TED**AI Hackathon 2024
