@@ -5,7 +5,7 @@ that aims to transform the way children engage with stories.
 
 ![Alt text](/client/public/family.png)
 
-## Issues
+## Challenges
 
 Parental involvement significantly impacts children's well-being. However, according to the U.S. Bureau of Labor Statistics, in 2023, parents spent an average of only 3.6 minutes per day reading to children under 6. Picture books, which are powerful educational tools for young children, often lack representation of specific cultural heritages, limiting their impact.
 
@@ -36,8 +36,13 @@ To address these issues, we propose StoryWithMe, an AI-driven companion that co-
 To run this app, you'll need:
 
 - [Python 3.11.5](https://www.python.org/downloads/)
-- [OpenAI API Key](https://openai.com/blog/openai-api)
-- [ElevenLabs API Key](https://elevenlabs.io/api)
+- Create and store your LLM API keys in `/server/llm_service/config/config.yaml`
+    - [OpenAI API Key](https://openai.com/blog/openai-api)
+    - [Portkey AI API Key](https://portkey.ai)
+- Store your image generation API key in `/server/img_service/config/config.yaml`
+    - [Stability AI API Key](https://platform.stability.ai)
+- Store your voice generation API key in a .env file in `/server/voiceover_service`
+    - [ElevenLabs API Key](https://elevenlabs.io/api)
 
 ### How to run
 
